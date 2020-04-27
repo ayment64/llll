@@ -1,22 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:device_id/device_id.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Features/Sign_in/Data/DataSource/User_remote_data_source.dart';
 import 'package:http/http.dart' as http;
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
 import 'package:meta/meta.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
+import 'dart:developer';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final http.Client client;
   String deviceType;
   String deviceId;
   String devicetoken;
+
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-  final FirebaseAuth auth = FirebaseAuth.instance;
 
   UserRemoteDataSourceImpl({@required this.client});
   @override
@@ -57,42 +56,40 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<String> register(Paramsre params) async {
-    
-      if (Platform.isAndroid) {
-        deviceType = "android";
-      } else if (Platform.isIOS) {
-        deviceType = "ios";
-      }
-      deviceId = await DeviceId.getID;
-      devicetoken = await firebaseMessaging.getToken();
-      print( json.encode({
-                "username": params.username,
-                "password": params.password,
-                "password_confirmation": params.passwordconfirmation,
-                "email": params.email,
-                "deviceType": deviceType,
-                "deviceId": deviceId,
-                "deviceToken": devicetoken
-              }));
-      final response =
-          await client.post("http://dev.aroundorder.com/api/auth/login",
-              headers: {'Content-Type': 'application/json'},
-              body: json.encode({
-                "username": params.username,
-                "password": params.password,
-                "password_confirmation": params.passwordconfirmation,
-                "email": params.email,
-                "deviceType": deviceType,
-                "deviceId": deviceId,
-                "deviceToken": devicetoken
-              }));
-      if (response.statusCode == 200) {
-        print("................"+response.toString());
-        return getToken(json.decode(response.body));
-      } else {
-        print("failure"+response.toString());
-        throw ServerFailure();
-      }
-    
+    if (Platform.isAndroid) {
+      deviceType = "android";
+    } else if (Platform.isIOS) {
+      deviceType = "ios";
+    }
+    deviceId = await DeviceId.getID;
+    devicetoken = await firebaseMessaging.getToken();
+    print(json.encode({
+      "username": params.username,
+      "password": params.password,
+      "password_confirmation": params.passwordconfirmation,
+      "email": params.email,
+      "deviceType": deviceType,
+      "deviceId": deviceId,
+      "deviceToken": devicetoken
+    }));
+    final response =
+        await client.post("http://dev.aroundorder.com/api/auth/login",
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode({
+              "username": params.username,
+              "password": params.password,
+              "password_confirmation": params.passwordconfirmation,
+              "email": params.email,
+              "deviceType": deviceType,
+              "deviceId": deviceId,
+              "deviceToken": devicetoken
+            }));
+    if (response.statusCode == 200) {
+      log("................" + response.toString());
+      return getToken(json.decode(response.body));
+    } else {
+      log("failure" + response.toString());
+      throw ServerFailure();
+    }
   }
 }
