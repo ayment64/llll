@@ -32,9 +32,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
             body: json.encode({
               "username": username,
               "password": password,
-              "deviceType": deviceType,
-              "deviceId": deviceId,
-              "deviceToken": devicetoken
+              "device_type": deviceType,
+              "device_id": deviceId,
+              "device_token": devicetoken
             }));
     if (response.statusCode == 200)
       return getToken(json.decode(response.body));
