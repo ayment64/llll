@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Core/Presentation_logic/Utils/Input_checker.dart';
 import 'package:llll/Core/Presentation_logic/Utils/register_input_cheker.dart';
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
@@ -11,6 +12,8 @@ part 'login_state.dart';
 
 const String USERNAME_INPUT_FAILURE =
     'The username should be 255 or less caracters ';
+const String EMAIL_INPUT_FAILURE =
+    'The email should be of form exapme@example.exm ';
 const String PASSWORD_INPUT_FAILURE = 'The password should be 6 or more charec';
 const String DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD =
     'Username and password are out of syntax';
@@ -52,26 +55,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             message: USERNAME_INPUT_FAILURE,
             confirmPassword: null,
             password: null,
-            username: null);
+            username: null, email: null);
       } else if (emailChecker(event.username) == false ||
           event.username.length > 255) {
         yield Error(
             message: USERNAME_INPUT_FAILURE,
             confirmPassword: null,
             password: event.password,
-            username: event.username);
+            username: event.username, email: null);
       } else if (event.password == null) {
         yield Error(
             message: PASSWORD_INPUT_FAILURE,
             confirmPassword: null,
             password: null,
-            username: null);
+            username: null, email: null);
       } else if (event.password.length < 6 || event.password.length > 255) {
         yield Error(
             message: PASSWORD_INPUT_FAILURE,
             confirmPassword: null,
             password: event.password,
-            username: event.username);
+            username: event.username, email: null);
       } else {
         yield Loading();
         final failureOrToken = await login(params);
@@ -80,14 +83,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               message: SERVER_FAILURE_MESSAGE,
               confirmPassword: null,
               password: event.password,
-              username: event.username);
+              username: event.username, email: null);
         }, (token) async* {
           if (token == "Login isues") {
             yield Error(
                 message: token,
                 confirmPassword: null,
                 password: event.password,
-                username: event.username);
+                username: event.username, email: null);
           } else {
             yield Loaded(token: token);
           }
@@ -96,40 +99,62 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is GotoSignup) {
       yield EmptySignUpDisplay();
     } else if (event is SignUp) {
-      /*final params = Paramsre(
+      final params = Paramsre(
           email: event.email,
           passwordconfirmation: event.confirmPassword,
           username: event.username,
           password: event.password);
       final reponse = registerInputChecker(params);
 
-      yield* reponse.fold((failure) async* {
-        if (failure is DoubleFailureUP) {
-          yield Error(message: DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD);
-        } else if (failure is UsernameInputFailure) {
-          yield Error(message: USERNAME_INPUT_FAILURE);
-        } else if (failure is PasswordInputFailure) {
-          yield Error(message: PASSWORD_INPUT_FAILURE);
-        } else if (failure is AllInputFailure) {
-          yield Error(message: All_INPUT_INPUT_FAILURE);
-        } else if (failure is DoubleFailureUE) {
-          yield Error(message: DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD);
-        } else if (failure is DoubleFailureEP) {
-          yield Error(message: DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD);
-        }
-      }, (string) async* {
+      if (event.username == null) {
+        yield Error(
+            message: USERNAME_INPUT_FAILURE,
+            confirmPassword: null,
+            password: null,
+            username: null, email: null);
+      } else if (event.username.length > 255) {
+        yield Error(
+            message: USERNAME_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username, email: null);
+      } else if (event.password == null) {
+        yield Error(
+            message: PASSWORD_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username, email: null);
+      } else if (event.password.length < 6 || event.password.length > 255) {
+        yield Error(
+            message: PASSWORD_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username, email: null);
+      } else if (event.confirmPassword != event.password) {
+        yield Error(
+            message: PASSWORD_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username, email: null);
+      } else if (emailChecker(event.email)) {
+        yield Error(
+            message: EMAIL_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username, email: null);
+      } else {
         yield Loading();
         final failureOrToken = await register(params);
         yield* failureOrToken.fold((failure) async* {
-          yield Error(message: SERVER_FAILURE_MESSAGE);
+          yield Error(message: SERVER_FAILURE_MESSAGE, email: null, username: null, password: null, confirmPassword: null);
         }, (token) async* {
           if (token == "Login isues") {
-            yield Error(message: token);
+            yield Error(message: token, confirmPassword: null, email: null, username: null, password: null);
           } else {
             yield Loaded(token: token);
           }
         });
-      });*/
+      }
     }
   }
 

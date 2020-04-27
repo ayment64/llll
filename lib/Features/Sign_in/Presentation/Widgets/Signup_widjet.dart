@@ -122,7 +122,7 @@ class _RegisterEmptyDisplayState extends State<RegisterEmptyDisplay> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                color: Color((0xFF0c5677)),
+                color: colorlightblue,
                 elevation: 0,
                 minWidth: 400,
                 height: 50,

@@ -46,7 +46,7 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
                       TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Username',
+                      labelText: 'Email',
                       prefixIcon: Icon(Icons.person_outline),
                       labelStyle: TextStyle(fontSize: 15)),
                 ),
@@ -86,7 +86,7 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                color: Color((0xFF0c5677)),
+                color: colorlightblue,
                 elevation: 0,
                 minWidth: 400,
                 height: 50,
