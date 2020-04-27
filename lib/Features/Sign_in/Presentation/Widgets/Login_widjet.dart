@@ -16,6 +16,7 @@ class LoginEmptyDisplay extends StatefulWidget {
 class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
   String username;
   String password;
+  bool passwordChecker = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,6 +57,10 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
               child: TextFormField(
                 onChanged: (value) {
                   password = value;
+                  if (password.length < 6)
+                    passwordChecker = true;
+                  else
+                    passwordChecker = false;
                 },
                 obscureText: true,
                 style:
@@ -71,8 +76,8 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
               padding: EdgeInsets.only(top: 20),
               child: MaterialButton(
                 onPressed: () {
-                  dispatchLogin();
-                }, //since this is only a UI app
+                  if (passwordChecker == false) dispatchLogin();
+                },
                 child: Text(
                   'SIGN IN',
                   style: TextStyle(
@@ -116,7 +121,7 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
                         )),
                     TextSpan(
                         recognizer: new TapGestureRecognizer()
-                          ..onTap = () =>dispatchgotoRegister(),
+                          ..onTap = () => dispatchgotoRegister(),
                         text: "sign up",
                         style: TextStyle(
                           fontFamily: 'SFUIDisplay',
@@ -139,7 +144,6 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
   }
 
   void dispatchgotoRegister() {
-    BlocProvider.of<LoginBloc>(context)
-        .dispatch(GotoSignup());
+    BlocProvider.of<LoginBloc>(context).dispatch(GotoSignup());
   }
 }
