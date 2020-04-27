@@ -17,7 +17,7 @@ const String DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD =
     'Username and password are out of syntax';
 const String DOUBLE_INPUT_FAILURE_USERNAME_EMAIL =
     'Username and email are out of syntax';
-    const String DOUBLE_INPUT_FAILURE_PASSWORD_EMAIL =
+const String DOUBLE_INPUT_FAILURE_PASSWORD_EMAIL =
     'Password and email are out of syntax';
 
 const String All_INPUT_INPUT_FAILURE =
@@ -47,29 +47,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is Signin) {
       final params = Params(username: event.username, password: event.password);
-      final reponse = inputChecker(params);
-
-      yield* reponse.fold((failure) async* {
-        if (failure is DoubleFailure) {
-          yield Error(message: DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD);
-        } else if (failure is UsernameInputFailure) {
-          yield Error(message: USERNAME_INPUT_FAILURE);
-        } else if (failure is PasswordInputFailure) {
-          yield Error(message: PASSWORD_INPUT_FAILURE);
+      final failureOrToken = await login(params);
+      if (inputChecker.usernameChecker(event.username) == false) {
+        yield Error(message: USERNAME_INPUT_FAILURE);
+      } else if (inputChecker.passwordChecker(event.password) == false) {
+        yield Error(message: USERNAME_INPUT_FAILURE);
+      }else
+     { yield Loading();
+       yield* failureOrToken.fold((failure) async* {
+        yield Error(message: SERVER_FAILURE_MESSAGE);
+      }, (token) async* {
+        if (token == "Login isues") {
+          yield Error(message: token);
+        } else {
+          yield Loaded(token: token);
         }
-      }, (string) async* {
-        yield Loading();
-        final failureOrToken = await login(params);
-        yield* failureOrToken.fold((failure) async* {
-          yield Error(message: SERVER_FAILURE_MESSAGE);
-        }, (token) async* {
-          if (token == "Login isues") {
-            yield Error(message: token);
-          } else {
-            yield Loaded(token: token);
-          }
-        });
-      });
+      });}
     } else if (event is GotoSignup) {
       yield EmptySignUpDisplay();
     } else if (event is SignUp) {

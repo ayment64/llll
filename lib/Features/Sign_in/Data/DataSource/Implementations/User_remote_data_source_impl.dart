@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
 import 'package:meta/meta.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'dart:developer';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final http.Client client;
@@ -45,6 +44,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       throw ServerFailure();
     }
   }
+  //
 
   String getToken(Map<String, dynamic> json) {
     return json['token'];
