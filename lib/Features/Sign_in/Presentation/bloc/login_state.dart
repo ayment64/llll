@@ -17,7 +17,11 @@ class Loaded extends LoginState {
 
 class Error extends LoginState {
   final String message;
-  Error({@required this.message}) {
+  final String username;
+  final String password;
+  final String confirmPassword;
+  Error({@required this.username,@required  this.password,@required  this.confirmPassword,@required this.message}) {
     print(message);
+    
   }
 }

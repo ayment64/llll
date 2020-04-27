@@ -4,18 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/main.dart';
 
-class LoginErrorDisplayPassword extends StatefulWidget {
-    final String username;
+class LoginErrorDisplayUsername extends StatefulWidget {
+  final String username;
   final String password;
-  const LoginErrorDisplayPassword({
-    Key key,@required this.username,@required this.password,
+  const LoginErrorDisplayUsername({
+    Key key,
+    @required this.username,
+    @required this.password,
   }) : super(key: key);
 
   @override
-  _LoginErrorDisplayPasswordState createState() => _LoginErrorDisplayPasswordState();
+  _LoginErrorDisplayUsernameState createState() =>
+      _LoginErrorDisplayUsernameState();
 }
 
-class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
+class _LoginErrorDisplayUsernameState extends State<LoginErrorDisplayUsername> {
   String username;
   String password;
   @override
@@ -40,7 +43,7 @@ class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
               child: Container(
                 color: colorwhite,
                 child: TextFormField(
-                  initialValue: username,
+                  initialValue: widget.username,
                   onChanged: (value) {
                     username = value;
                   },
@@ -71,14 +74,14 @@ class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
                     labelStyle: TextStyle(fontSize: 15)),
               ),
             ),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                      child: Text(
-                    "Password can't be empty and 6+ characters",
-                    style: TextStyle(color: Colors.red),
-                  )),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                  child: Text(
+                "Username can't be empty ",
+                style: TextStyle(color: Colors.red),
+              )),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: MaterialButton(

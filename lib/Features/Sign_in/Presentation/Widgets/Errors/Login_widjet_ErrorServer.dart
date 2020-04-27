@@ -5,8 +5,10 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/main.dart';
 
 class LoginErrorDisplay extends StatefulWidget {
+    final String username;
+  final String password;
   const LoginErrorDisplay({
-    Key key,
+    Key key,@required this.username,@required this.password,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class _LoginErrorDisplayState extends State<LoginErrorDisplay> {
               child: Container(
                 color: colorwhite,
                 child: TextFormField(
+                  initialValue: widget.username,
                   onChanged: (value) {
                     username = value;
                   },
@@ -54,6 +57,7 @@ class _LoginErrorDisplayState extends State<LoginErrorDisplay> {
             Container(
               color: colorwhite,
               child: TextFormField(
+                initialValue: widget.password,
                 onChanged: (value) {
                   password = value;
                 },

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Core/Presentation_logic/Utils/Input_checker.dart';
 import 'package:llll/Core/Presentation_logic/Utils/register_input_cheker.dart';
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
@@ -46,27 +45,58 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is Signin) {
+      yield Loading();
       final params = Params(username: event.username, password: event.password);
-      final failureOrToken = await login(params);
-      if (inputChecker.usernameChecker(event.username) == false) {
-        yield Error(message: USERNAME_INPUT_FAILURE);
-      } else if (inputChecker.passwordChecker(event.password) == false) {
-        yield Error(message: USERNAME_INPUT_FAILURE);
-      }else
-     { yield Loading();
-       yield* failureOrToken.fold((failure) async* {
-        yield Error(message: SERVER_FAILURE_MESSAGE);
-      }, (token) async* {
-        if (token == "Login isues") {
-          yield Error(message: token);
-        } else {
-          yield Loaded(token: token);
-        }
-      });}
+      if (event.username == null) {
+        yield Error(
+            message: USERNAME_INPUT_FAILURE,
+            confirmPassword: null,
+            password: null,
+            username: null);
+      } else if (emailChecker(event.username) == false ||
+          event.username.length > 255) {
+        yield Error(
+            message: USERNAME_INPUT_FAILURE,
+            confirmPassword: null,
+            password: event.password,
+            username: event.username);
+      } else if (event.password == null) {
+        yield Error(
+            message: PASSWORD_INPUT_FAILURE,
+            confirmPassword: null,
+            password: null,
+            username: null);
+      } else if (event.password.length < 6 || event.password.length > 255) {
+        yield Error(
+            message: PASSWORD_INPUT_FAILURE,
+            confirmPassword: null,
+            password: event.password,
+            username: event.username);
+      } else {
+        yield Loading();
+        final failureOrToken = await login(params);
+        yield* failureOrToken.fold((failure) async* {
+          yield Error(
+              message: SERVER_FAILURE_MESSAGE,
+              confirmPassword: null,
+              password: event.password,
+              username: event.username);
+        }, (token) async* {
+          if (token == "Login isues") {
+            yield Error(
+                message: token,
+                confirmPassword: null,
+                password: event.password,
+                username: event.username);
+          } else {
+            yield Loaded(token: token);
+          }
+        });
+      }
     } else if (event is GotoSignup) {
       yield EmptySignUpDisplay();
     } else if (event is SignUp) {
-      final params = Paramsre(
+      /*final params = Paramsre(
           email: event.email,
           passwordconfirmation: event.confirmPassword,
           username: event.username,
@@ -99,7 +129,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             yield Loaded(token: token);
           }
         });
-      });
+      });*/
     }
+  }
+
+  bool emailChecker(String str) {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(str);
+    return emailValid;
   }
 }

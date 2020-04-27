@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorPassword.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorServer.dart';
+import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorUsername.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Loaded_widjet.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Loadin_widget.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Login_widjet.dart';
@@ -26,7 +28,7 @@ class SignIn extends StatelessWidget {
           ),
         ),
         BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, state){
+          builder: (context, state) {
             if (state is Empty) {
               return LoginEmptyDisplay();
             } else if (state is Loading) {
@@ -35,9 +37,19 @@ class SignIn extends StatelessWidget {
               print(state.token);
               return LodaedWidgetDisplay();
             } else if (state is Error) {
-              if(state.message=="Login isues")
-              {print("././././././././././"+state.message);
-              return LoginErrorDisplay();
+              if (state.message == "Login isues") {
+                print("././././././././././" + state.message);
+                return LoginErrorDisplay(
+                  username: state.username,
+                  password: state.password,
+                );
+              } else if (state.message == USERNAME_INPUT_FAILURE) {
+                return LoginErrorDisplayUsername(
+                  password: state.password,
+                  username: state.username,
+                );
+              } else if (state.message == PASSWORD_INPUT_FAILURE) {
+                return LoginErrorDisplayPassword(password: state.password, username: state.username,);
               }
               return LoginEmptyDisplay();
             } else if (state is EmptySignUpDisplay) {
