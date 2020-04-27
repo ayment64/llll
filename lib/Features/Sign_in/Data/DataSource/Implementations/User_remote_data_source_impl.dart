@@ -73,22 +73,22 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       "deviceToken": devicetoken
     }));
     final response =
-        await client.post("http://dev.aroundorder.com/api/auth/login",
+        await client.post("http://dev.aroundorder.com/api/auth/register",
             headers: {'Content-Type': 'application/json'},
             body: json.encode({
               "username": params.username,
               "password": params.password,
               "password_confirmation": params.passwordconfirmation,
               "email": params.email,
-              "deviceType": deviceType,
-              "deviceId": deviceId,
-              "deviceToken": devicetoken
+              "device_type": deviceType,
+              "device_id": deviceId,
+              "device_token": devicetoken
             }));
     if (response.statusCode == 200) {
-      log("................" + response.toString());
+      print("................" + response.toString());
       return getToken(json.decode(response.body));
     } else {
-      log("failure" + response.toString());
+      print("failure" + response.toString());
       throw ServerFailure();
     }
   }

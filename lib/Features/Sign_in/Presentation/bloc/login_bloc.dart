@@ -76,7 +76,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final params = Paramsre(
           email: event.email,
           passwordconfirmation: event.confirmPassword,
-          username: event.confirmPassword,
+          username: event.username,
           password: event.password);
       final reponse = registerInputChecker(params);
 
