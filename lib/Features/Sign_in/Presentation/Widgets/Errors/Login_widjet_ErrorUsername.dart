@@ -78,7 +78,7 @@ class _LoginErrorDisplayUsernameState extends State<LoginErrorDisplayUsername> {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                   child: Text(
-                "Username can't be empty ",
+                "Email can't be empty and should be of form example@example.exmple ",
                 style: TextStyle(color: Colors.red),
               )),
             ),

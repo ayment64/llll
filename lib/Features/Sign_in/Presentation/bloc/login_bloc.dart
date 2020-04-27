@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Core/Presentation_logic/Utils/Input_checker.dart';
 import 'package:llll/Core/Presentation_logic/Utils/register_input_cheker.dart';
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
@@ -104,7 +103,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordconfirmation: event.confirmPassword,
           username: event.username,
           password: event.password);
-      final reponse = registerInputChecker(params);
 
       if (event.username == null) {
         yield Error(
