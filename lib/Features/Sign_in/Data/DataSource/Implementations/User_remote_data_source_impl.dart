@@ -63,15 +63,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
     deviceId = await DeviceId.getID;
     devicetoken = await firebaseMessaging.getToken();
-    print(json.encode({
-      "username": params.username,
-      "password": params.password,
-      "password_confirmation": params.passwordconfirmation,
-      "email": params.email,
-      "deviceType": deviceType,
-      "deviceId": deviceId,
-      "deviceToken": devicetoken
-    }));
     final response =
         await client.post("http://dev.aroundorder.com/api/auth/register",
             headers: {'Content-Type': 'application/json'},
@@ -85,10 +76,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
               "device_token": devicetoken
             }));
     if (response.statusCode == 200) {
-      print("................" + response.toString());
-      return getToken(json.decode(response.body));
+      return "regitered successfully";
     } else {
-      print("failure" + response.toString());
       throw ServerFailure();
     }
   }
