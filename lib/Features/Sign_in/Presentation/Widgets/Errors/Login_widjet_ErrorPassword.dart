@@ -5,14 +5,17 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/main.dart';
 
 class LoginErrorDisplayPassword extends StatefulWidget {
-    final String username;
+  final String username;
   final String password;
   const LoginErrorDisplayPassword({
-    Key key,@required this.username,@required this.password,
+    Key key,
+    @required this.username,
+    @required this.password,
   }) : super(key: key);
 
   @override
-  _LoginErrorDisplayPasswordState createState() => _LoginErrorDisplayPasswordState();
+  _LoginErrorDisplayPasswordState createState() =>
+      _LoginErrorDisplayPasswordState();
 }
 
 class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
@@ -40,7 +43,7 @@ class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
               child: Container(
                 color: colorwhite,
                 child: TextFormField(
-                  initialValue: username,
+                  initialValue: widget.username,
                   onChanged: (value) {
                     username = value;
                   },
@@ -49,29 +52,31 @@ class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
-                      prefixIcon: Icon(Icons.person_outline),
+                      prefixIcon: Icon(Icons.email),
                       labelStyle: TextStyle(fontSize: 15)),
                 ),
               ),
             ),
-            Container(
-              color: colorwhite,
-              child: TextFormField(
-                initialValue: widget.password,
-                onChanged: (value) {
-                  password = value;
-                },
-                obscureText: true,
-                style:
-                    TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    prefixIcon: Icon(Icons.lock_outline),
-                    labelStyle: TextStyle(fontSize: 15)),
-              ),
-            ),
-              Padding(
+            Column(
+              children: <Widget>[
+                Container(
+                  color: colorwhite,
+                  child: TextFormField(
+                    initialValue: widget.password,
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    obscureText: true,
+                    style: TextStyle(
+                        color: Colors.black, fontFamily: 'SFUIDisplay'),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.lock_outline),
+                        labelStyle: TextStyle(fontSize: 15)),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                       child: Text(
@@ -79,6 +84,8 @@ class _LoginErrorDisplayPasswordState extends State<LoginErrorDisplayPassword> {
                     style: TextStyle(color: Colors.red),
                   )),
                 ),
+              ],
+            ),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: MaterialButton(

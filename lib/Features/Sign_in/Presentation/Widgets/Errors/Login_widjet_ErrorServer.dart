@@ -20,6 +20,8 @@ class _LoginErrorDisplayState extends State<LoginErrorDisplay> {
   String password;
   @override
   Widget build(BuildContext context) {
+    username= widget.username;
+    password= widget.password;
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(top: 220),
@@ -60,6 +62,7 @@ class _LoginErrorDisplayState extends State<LoginErrorDisplay> {
                 initialValue: widget.password,
                 onChanged: (value) {
                   password = value;
+
                 },
                 obscureText: true,
                 style:

@@ -42,18 +42,30 @@ class _LoginErrorDisplayUsernameState extends State<LoginErrorDisplayUsername> {
               padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
               child: Container(
                 color: colorwhite,
-                child: TextFormField(
-                  initialValue: widget.username,
-                  onChanged: (value) {
-                    username = value;
-                  },
-                  style:
-                      TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.person_outline),
-                      labelStyle: TextStyle(fontSize: 15)),
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: widget.username,
+                      onChanged: (value) {
+                        username = value;
+                      },
+                      style: TextStyle(
+                          color: Colors.black, fontFamily: 'SFUIDisplay'),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Email',
+                          prefixIcon: Icon(Icons.person_outline),
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                      child: Center(
+                          child: Text(
+                        "Email can't be empty and should be of form example@example.example ",
+                        style: TextStyle(color: Colors.red),
+                      )),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -73,14 +85,6 @@ class _LoginErrorDisplayUsernameState extends State<LoginErrorDisplayUsername> {
                     prefixIcon: Icon(Icons.lock_outline),
                     labelStyle: TextStyle(fontSize: 15)),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                  child: Text(
-                "Email can't be empty and should be of form example@example.exmple ",
-                style: TextStyle(color: Colors.red),
-              )),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20),
