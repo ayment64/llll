@@ -1,6 +1,6 @@
 part of 'login_bloc.dart';
 
-@immutable
+
 abstract class LoginEvent extends Equatable {
   LoginEvent([List props = const <dynamic>[]]) : super(props);
 }
