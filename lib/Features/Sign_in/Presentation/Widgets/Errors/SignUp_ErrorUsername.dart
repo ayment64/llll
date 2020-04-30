@@ -4,21 +4,35 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/main.dart';
 
 class RegisterErrorDisplayUsername extends StatefulWidget {
+  final String username;
+  final String password;
+  final String email;
+  final String confirmPassword;
   const RegisterErrorDisplayUsername({
     Key key,
+    this.username,
+    this.password,
+    this.email,
+    this.confirmPassword,
   }) : super(key: key);
 
   @override
-  _RegisterErrorDisplayUsernameState createState() => _RegisterErrorDisplayUsernameState();
+  _RegisterErrorDisplayUsernameState createState() =>
+      _RegisterErrorDisplayUsernameState();
 }
 
-class _RegisterErrorDisplayUsernameState extends State<RegisterErrorDisplayUsername> {
+class _RegisterErrorDisplayUsernameState
+    extends State<RegisterErrorDisplayUsername> {
   String username;
   String password;
   String email;
   String confirmPassword;
   @override
   Widget build(BuildContext context) {
+    username = widget.username;
+    password = widget.password;
+    email = widget.email;
+    confirmPassword = widget.confirmPassword;
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(top: 220),
@@ -44,8 +58,8 @@ class _RegisterErrorDisplayUsernameState extends State<RegisterErrorDisplayUsern
                       onChanged: (value) {
                         username = value;
                       },
-                      style:
-                          TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+                      style: TextStyle(
+                          color: Colors.black, fontFamily: 'SFUIDisplay'),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Username',
@@ -57,7 +71,7 @@ class _RegisterErrorDisplayUsernameState extends State<RegisterErrorDisplayUsern
               ),
             ),
             Padding(
-              padding:const EdgeInsets.fromLTRB(0, 5, 0, 5),
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: Container(
                 color: colorwhite,
                 child: TextFormField(
@@ -142,7 +156,10 @@ class _RegisterErrorDisplayUsernameState extends State<RegisterErrorDisplayUsern
   }
 
   void dispatchRegister() {
-    BlocProvider.of<LoginBloc>(context)
-        .dispatch(SignUp(confirmPassword: confirmPassword ,email: email, username: username, password: password));
+    BlocProvider.of<LoginBloc>(context).dispatch(SignUp(
+        confirmPassword: confirmPassword,
+        email: email,
+        username: username,
+        password: password));
   }
 }
