@@ -14,13 +14,14 @@ const String USERNAME_INPUT_FAILURE =
 const String EMAIL_INPUT_FAILURE =
     'The email should be of form exapme@example.exm ';
 const String PASSWORD_INPUT_FAILURE = 'The password should be 6 or more charec';
+const String PASSWORD_CONFIRMATION_INPUT_FAILURE =
+    "This field should should match the password";
 const String DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD =
     'Username and password are out of syntax';
 const String DOUBLE_INPUT_FAILURE_USERNAME_EMAIL =
     'Username and email are out of syntax';
 const String DOUBLE_INPUT_FAILURE_PASSWORD_EMAIL =
     'Password and email are out of syntax';
-
 const String All_INPUT_INPUT_FAILURE =
     'Username and password and email are out of syntax';
 const String SERVER_FAILURE_MESSAGE =
@@ -51,29 +52,33 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final params = Params(username: event.username, password: event.password);
       if (event.username == null) {
         yield Error(
-            message: USERNAME_INPUT_FAILURE,
+            message: EMAIL_INPUT_FAILURE,
             confirmPassword: null,
-            password: null,
-            username: null, email: null);
+            password: event.password,
+            username: null,
+            email: null);
       } else if (emailChecker(event.username) == false ||
           event.username.length > 255) {
         yield Error(
-            message: USERNAME_INPUT_FAILURE,
+            message: EMAIL_INPUT_FAILURE,
             confirmPassword: null,
             password: event.password,
-            username: event.username, email: null);
+            username: event.username,
+            email: null);
       } else if (event.password == null) {
         yield Error(
             message: PASSWORD_INPUT_FAILURE,
             confirmPassword: null,
             password: null,
-            username: null, email: null);
+            username: event.username,
+            email: null);
       } else if (event.password.length < 6 || event.password.length > 255) {
         yield Error(
             message: PASSWORD_INPUT_FAILURE,
             confirmPassword: null,
             password: event.password,
-            username: event.username, email: null);
+            username: event.username,
+            email: null);
       } else {
         yield Loading();
         final failureOrToken = await login(params);
@@ -82,14 +87,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               message: SERVER_FAILURE_MESSAGE,
               confirmPassword: null,
               password: event.password,
-              username: event.username, email: null);
+              username: event.username,
+              email: null);
         }, (token) async* {
           if (token == "Login isues") {
             yield Error(
                 message: token,
                 confirmPassword: null,
                 password: event.password,
-                username: event.username, email: null);
+                username: event.username,
+                email: null);
           } else {
             yield Loaded(token: token);
           }
@@ -105,49 +112,80 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           password: event.password);
 
       if (event.username == null) {
-        yield Error(
+        yield SignUpError(
             message: USERNAME_INPUT_FAILURE,
-            confirmPassword: null,
-            password: null,
-            username: null, email: null);
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: null,
+            email: event.email);
       } else if (event.username.length > 255) {
-        yield Error(
+        yield SignUpError(
             message: USERNAME_INPUT_FAILURE,
             confirmPassword: event.confirmPassword,
             password: event.password,
-            username: event.username, email: null);
+            username: event.username,
+            email: event.email);
       } else if (event.password == null) {
-        yield Error(
+        yield SignUpError(
             message: PASSWORD_INPUT_FAILURE,
             confirmPassword: event.confirmPassword,
             password: event.password,
-            username: event.username, email: null);
+            username: event.username,
+            email: event.email);
       } else if (event.password.length < 6 || event.password.length > 255) {
-        yield Error(
+        yield SignUpError(
             message: PASSWORD_INPUT_FAILURE,
             confirmPassword: event.confirmPassword,
             password: event.password,
-            username: event.username, email: null);
+            username: event.username,
+            email: event.email);
+      } else if (event.confirmPassword == null ||
+          event.confirmPassword.length == 0) {
+        yield SignUpError(
+            message: PASSWORD_CONFIRMATION_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username,
+            email: event.email);
       } else if (event.confirmPassword != event.password) {
-        yield Error(
-            message: PASSWORD_INPUT_FAILURE,
+        yield SignUpError(
+            message: PASSWORD_CONFIRMATION_INPUT_FAILURE,
             confirmPassword: event.confirmPassword,
             password: event.password,
-            username: event.username, email: null);
-      } else if (emailChecker(event.email)) {
-        yield Error(
+            username: event.username,
+            email: event.email);
+      } else if (event.email == null || event.email.length == 0) {
+        yield SignUpError(
             message: EMAIL_INPUT_FAILURE,
             confirmPassword: event.confirmPassword,
             password: event.password,
-            username: event.username, email: null);
+            username: event.username,
+            email: event.email);
+      } else if (emailChecker(event.email)) {
+        yield SignUpError(
+            message: EMAIL_INPUT_FAILURE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username,
+            email: event.email);
       } else {
         yield Loading();
         final failureOrToken = await register(params);
         yield* failureOrToken.fold((failure) async* {
-          yield Error(message: SERVER_FAILURE_MESSAGE, email: null, username: null, password: null, confirmPassword: null);
+          yield SignUpError(
+              message: SERVER_FAILURE_MESSAGE,
+              email: null,
+              username: null,
+              password: null,
+              confirmPassword: null);
         }, (token) async* {
           if (token == "Login isues") {
-            yield Error(message: token, confirmPassword: null, email: null, username: null, password: null);
+            yield SignUpError(
+                message: token,
+                confirmPassword: null,
+                email: null,
+                username: null,
+                password: null);
           } else {
             yield Loaded(token: token);
           }

@@ -21,8 +21,24 @@ class Error extends LoginState {
   final String password;
   final String confirmPassword;
   final String email;
-  Error({@required this.email,@required this.username,@required  this.password,@required  this.confirmPassword,@required this.message}) {
-    print(message);
-    
-  }
+  Error(
+      {@required this.email,
+      @required this.username,
+      @required this.password,
+      @required this.confirmPassword,
+      @required this.message});
+}
+
+class SignUpError extends LoginState {
+  final String message;
+  final String username;
+  final String password;
+  final String confirmPassword;
+  final String email;
+  SignUpError(
+      {@required this.email,
+      @required this.username,
+      @required this.password,
+      @required this.confirmPassword,
+      @required this.message});
 }

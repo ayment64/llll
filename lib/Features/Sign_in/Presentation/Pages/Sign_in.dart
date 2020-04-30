@@ -43,7 +43,7 @@ class SignIn extends StatelessWidget {
                   username: state.username,
                   password: state.password,
                 );
-              } else if (state.message == USERNAME_INPUT_FAILURE) {
+              } else if (state.message == EMAIL_INPUT_FAILURE) {
                 return LoginErrorDisplayUsername(
                   password: state.password,
                   username: state.username,
