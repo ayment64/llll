@@ -9,10 +9,8 @@ import '../../Domain/UseCaces/Login.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-const String USERNAME_INPUT_FAILURE =
-    'The username should be 255 or less caracters ';
-const String EMAIL_INPUT_FAILURE =
-    'The email should be of form exapme@example.exm ';
+const String USERNAME_INPUT_FAILURE = "The username can't be empty ";
+const String EMAIL_INPUT_FAILURE = 'please enter a valid email';
 const String PASSWORD_INPUT_FAILURE = 'The password should be 6 or more charec';
 const String PASSWORD_CONFIRMATION_INPUT_FAILURE =
     "This field should should match the password";
@@ -105,6 +103,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is GotoSignup) {
       yield EmptySignUpDisplay();
     } else if (event is SignUp) {
+      yield Loading();
       final params = Paramsre(
           email: event.email,
           passwordconfirmation: event.confirmPassword,
@@ -113,79 +112,139 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (event.username == null) {
         yield SignUpError(
-            message: USERNAME_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: null,
-            email: event.email);
+          message: USERNAME_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: true,
+          serverErrorVisibility: false,
+        );
       } else if (event.username.length > 255) {
         yield SignUpError(
-            message: USERNAME_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: USERNAME_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: true,
+          serverErrorVisibility: false,
+        );
       } else if (event.password == null) {
         yield SignUpError(
-            message: PASSWORD_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: PASSWORD_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: true,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+        );
       } else if (event.password.length < 6 || event.password.length > 255) {
         yield SignUpError(
-            message: PASSWORD_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: PASSWORD_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: true,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+        );
       } else if (event.confirmPassword == null ||
           event.confirmPassword.length == 0) {
         yield SignUpError(
-            message: PASSWORD_CONFIRMATION_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: PASSWORD_CONFIRMATION_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: true,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+        );
       } else if (event.confirmPassword != event.password) {
         yield SignUpError(
-            message: PASSWORD_CONFIRMATION_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: PASSWORD_CONFIRMATION_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: true,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+        );
       } else if (event.email == null || event.email.length == 0) {
         yield SignUpError(
-            message: EMAIL_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: EMAIL_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: true,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+        );
       } else if (emailChecker(event.email)) {
         yield SignUpError(
-            message: EMAIL_INPUT_FAILURE,
-            confirmPassword: event.confirmPassword,
-            password: event.password,
-            username: event.username,
-            email: event.email);
+          message: EMAIL_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: true,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+        );
       } else {
         yield Loading();
         final failureOrToken = await register(params);
         yield* failureOrToken.fold((failure) async* {
           yield SignUpError(
-              message: SERVER_FAILURE_MESSAGE,
-              email: null,
-              username: null,
-              password: null,
-              confirmPassword: null);
+            message: SERVER_FAILURE_MESSAGE,
+            confirmPassword: event.confirmPassword,
+            password: event.password,
+            username: event.username,
+            email: event.email,
+            confirmPasswordErrorVisibility: false,
+            emailErrorVisibility: false,
+            passwordErrorVisibility: false,
+            usernameErrorVisibility: false,
+            serverErrorVisibility: true,
+          );
         }, (token) async* {
           if (token == "Login isues") {
             yield SignUpError(
-                message: token,
-                confirmPassword: null,
-                email: null,
-                username: null,
-                password: null);
+              message: SERVER_FAILURE_MESSAGE,
+              confirmPassword: event.confirmPassword,
+              password: event.password,
+              username: event.username,
+              email: event.email,
+              confirmPasswordErrorVisibility: false,
+              emailErrorVisibility: false,
+              passwordErrorVisibility: false,
+              usernameErrorVisibility: false,
+              serverErrorVisibility: true,
+            );
           } else {
             yield Loaded(token: token);
           }

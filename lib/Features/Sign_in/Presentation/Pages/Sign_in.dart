@@ -49,11 +49,35 @@ class SignIn extends StatelessWidget {
                   username: state.username,
                 );
               } else if (state.message == PASSWORD_INPUT_FAILURE) {
-                return LoginErrorDisplayPassword(password: state.password, username: state.username,);
+                return LoginErrorDisplayPassword(
+                  password: state.password,
+                  username: state.username,
+                );
               }
               return LoginEmptyDisplay();
             } else if (state is EmptySignUpDisplay) {
-              return RegisterEmptyDisplay();
+              return RegisterEmptyDisplay(
+                  username: null,
+                  password: "",
+                  email: "",
+                  confirmPassword: "",
+                  usernameErrorVisibility: false,
+                  passwordErrorVisibility: false,
+                  emailErrorVisibility: false,
+                  confirmPasswordErrorVisibility: false,
+                  serverErrorVisibility: false);
+            } else if (state is SignUpError) {
+              return new RegisterEmptyDisplay(
+                  username: state.username,
+                  password: state.password,
+                  email: state.email,
+                  confirmPassword: state.confirmPassword,
+                  usernameErrorVisibility: state.usernameErrorVisibility,
+                  passwordErrorVisibility: state.passwordErrorVisibility,
+                  emailErrorVisibility: state.emailErrorVisibility,
+                  confirmPasswordErrorVisibility:
+                      state.confirmPasswordErrorVisibility,
+                  serverErrorVisibility: state.serverErrorVisibility);
             }
           },
         )

@@ -21,6 +21,7 @@ class Error extends LoginState {
   final String password;
   final String confirmPassword;
   final String email;
+
   Error(
       {@required this.email,
       @required this.username,
@@ -35,8 +36,17 @@ class SignUpError extends LoginState {
   final String password;
   final String confirmPassword;
   final String email;
-  SignUpError(
-      {@required this.email,
+  final bool usernameErrorVisibility;
+  final bool passwordErrorVisibility;
+  final bool emailErrorVisibility;
+  final bool confirmPasswordErrorVisibility;
+  final bool serverErrorVisibility;
+  SignUpError({@required this.serverErrorVisibility, 
+      @required this.usernameErrorVisibility,
+      @required this.passwordErrorVisibility,
+      @required this.emailErrorVisibility,
+      @required this.confirmPasswordErrorVisibility,
+      @required this.email,
       @required this.username,
       @required this.password,
       @required this.confirmPassword,
