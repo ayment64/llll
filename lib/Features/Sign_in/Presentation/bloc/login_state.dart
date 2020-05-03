@@ -32,6 +32,8 @@ class Error extends LoginState {
 
 class SignUpError extends LoginState {
   final String message;
+  final String firstname;
+  final String lastname;
   final String username;
   final String password;
   final String confirmPassword;
@@ -41,7 +43,14 @@ class SignUpError extends LoginState {
   final bool emailErrorVisibility;
   final bool confirmPasswordErrorVisibility;
   final bool serverErrorVisibility;
-  SignUpError({@required this.serverErrorVisibility, 
+  final bool firstnameErrorVisibility;
+  final bool lastnameErrorVisibility;
+  SignUpError(
+      {@required this.firstnameErrorVisibility,
+      @required this.lastnameErrorVisibility,
+      @required this.firstname,
+      @required this.lastname,
+      @required this.serverErrorVisibility,
       @required this.usernameErrorVisibility,
       @required this.passwordErrorVisibility,
       @required this.emailErrorVisibility,

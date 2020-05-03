@@ -21,7 +21,9 @@ class Paramsre extends Equatable {
   final String password;
   final String email;
   final String passwordconfirmation;
+  final String firstname;
+  final String lastname;
 
-  Paramsre({@required this.email,@required this.passwordconfirmation, @required this.username, @required this.password})
+  Paramsre({@required this.firstname,@required this.lastname, @required this.email,@required this.passwordconfirmation, @required this.username, @required this.password})
       : super([username, password]);
 }

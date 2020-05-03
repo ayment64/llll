@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:device_id/device_id.dart';
+import 'package:llll/Core/Error/Exeptions.dart';
 import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Features/Sign_in/Data/DataSource/User_remote_data_source.dart';
 import 'package:http/http.dart' as http;
@@ -41,7 +42,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     else if (response.statusCode == 401) {
       return "Login isues";
     } else {
-      throw ServerFailure();
+      throw ServerExeption();
     }
   }
   //
@@ -63,22 +64,38 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
     deviceId = await DeviceId.getID;
     devicetoken = await firebaseMessaging.getToken();
+    print(json.encode({
+      "username": params.email,
+      "password": params.password,
+      "password_confirmation": params.passwordconfirmation,
+      "email": params.email,
+      "firstname": params.firstname,
+      "lastname": params.lastname,
+      "device_type": deviceType,
+      "device_id": deviceId,
+      "device_token": devicetoken
+    }));
     final response =
         await client.post("http://dev.aroundorder.com/api/auth/register",
             headers: {'Content-Type': 'application/json'},
             body: json.encode({
-              "username": params.username,
+              "username": params.email,
               "password": params.password,
               "password_confirmation": params.passwordconfirmation,
               "email": params.email,
+              "firstname": params.firstname,
+              "lastname": params.lastname,
               "device_type": deviceType,
               "device_id": deviceId,
               "device_token": devicetoken
             }));
+
     if (response.statusCode == 200) {
-      return "regitered successfully";
-    } else {
-      throw ServerFailure();
+      return getToken(json.decode(response.body));
+    } else if (response.statusCode==401){
+      return "The email provided already has an account!";
+    }else {
+      throw ServerExeption();
     }
   }
 }

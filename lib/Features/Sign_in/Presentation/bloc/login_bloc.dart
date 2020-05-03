@@ -9,21 +9,14 @@ import '../../Domain/UseCaces/Login.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-const String USERNAME_INPUT_FAILURE = "The username can't be empty ";
-const String EMAIL_INPUT_FAILURE = 'please enter a valid email';
+const String USERNAME_INPUT_FAILURE = "This field can't be empty ";
+const String EMAIL_INPUT_FAILURE = 'Please enter a valid email';
 const String PASSWORD_INPUT_FAILURE = 'The password should be 6 or more charec';
 const String PASSWORD_CONFIRMATION_INPUT_FAILURE =
     "This field should should match the password";
-const String DOUBLE_INPUT_FAILURE_USERNAME_PASSWORD =
-    'Username and password are out of syntax';
-const String DOUBLE_INPUT_FAILURE_USERNAME_EMAIL =
-    'Username and email are out of syntax';
-const String DOUBLE_INPUT_FAILURE_PASSWORD_EMAIL =
-    'Password and email are out of syntax';
-const String All_INPUT_INPUT_FAILURE =
-    'Username and password and email are out of syntax';
 const String SERVER_FAILURE_MESSAGE =
     'Server failure it will be up in a minute ';
+const String USED_EMAIL_ERROR = "The email provided already has an account!";
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final Login login;
@@ -105,12 +98,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is SignUp) {
       yield Loading();
       final params = Paramsre(
-          email: event.email,
-          passwordconfirmation: event.confirmPassword,
-          username: event.username,
-          password: event.password);
+        email: event.email,
+        passwordconfirmation: event.confirmPassword,
+        username: event.username,
+        password: event.password,
+        firstname: event.firstname,
+        lastname: event.lastname,
+      );
 
-      if (event.username == null) {
+      if (event.firstname == null || event.firstname.length == 0) {
         yield SignUpError(
           message: USERNAME_INPUT_FAILURE,
           confirmPassword: event.confirmPassword,
@@ -120,10 +116,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           confirmPasswordErrorVisibility: false,
           emailErrorVisibility: false,
           passwordErrorVisibility: false,
-          usernameErrorVisibility: true,
+          usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: true,
+          lastnameErrorVisibility: false,
         );
-      } else if (event.username.length > 255) {
+      } else if (event.firstname.length > 255) {
         yield SignUpError(
           message: USERNAME_INPUT_FAILURE,
           confirmPassword: event.confirmPassword,
@@ -133,8 +133,46 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           confirmPasswordErrorVisibility: false,
           emailErrorVisibility: false,
           passwordErrorVisibility: false,
-          usernameErrorVisibility: true,
+          usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: true,
+          lastnameErrorVisibility: false,
+        );
+      } else if (event.lastname == null || event.lastname.length == 0) {
+        yield SignUpError(
+          message: USERNAME_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: true,
+        );
+      } else if (event.lastname.length > 255) {
+        yield SignUpError(
+          message: USERNAME_INPUT_FAILURE,
+          confirmPassword: event.confirmPassword,
+          password: event.password,
+          username: event.username,
+          email: event.email,
+          confirmPasswordErrorVisibility: false,
+          emailErrorVisibility: false,
+          passwordErrorVisibility: false,
+          usernameErrorVisibility: false,
+          serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: true,
         );
       } else if (event.password == null) {
         yield SignUpError(
@@ -148,6 +186,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordErrorVisibility: true,
           usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: false,
         );
       } else if (event.password.length < 6 || event.password.length > 255) {
         yield SignUpError(
@@ -161,6 +203,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordErrorVisibility: true,
           usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: false,
         );
       } else if (event.confirmPassword == null ||
           event.confirmPassword.length == 0) {
@@ -175,6 +221,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordErrorVisibility: false,
           usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: false,
         );
       } else if (event.confirmPassword != event.password) {
         yield SignUpError(
@@ -188,6 +238,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordErrorVisibility: false,
           usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: false,
         );
       } else if (event.email == null || event.email.length == 0) {
         yield SignUpError(
@@ -201,8 +255,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordErrorVisibility: false,
           usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: false,
         );
-      } else if (emailChecker(event.email)) {
+      } else if (emailChecker(event.email) == false) {
         yield SignUpError(
           message: EMAIL_INPUT_FAILURE,
           confirmPassword: event.confirmPassword,
@@ -214,6 +272,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           passwordErrorVisibility: false,
           usernameErrorVisibility: false,
           serverErrorVisibility: false,
+          firstname: event.firstname,
+          lastname: event.lastname,
+          firstnameErrorVisibility: false,
+          lastnameErrorVisibility: false,
         );
       } else {
         yield Loading();
@@ -230,8 +292,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             passwordErrorVisibility: false,
             usernameErrorVisibility: false,
             serverErrorVisibility: true,
+            firstname: event.firstname,
+            lastname: event.lastname,
+            firstnameErrorVisibility: false,
+            lastnameErrorVisibility: false,
           );
         }, (token) async* {
+          yield Loading();
           if (token == "Login isues") {
             yield SignUpError(
               message: SERVER_FAILURE_MESSAGE,
@@ -244,6 +311,27 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               passwordErrorVisibility: false,
               usernameErrorVisibility: false,
               serverErrorVisibility: true,
+              firstname: event.firstname,
+              lastname: event.lastname,
+              firstnameErrorVisibility: false,
+              lastnameErrorVisibility: false,
+            );
+          } else if (token == "The email provided already has an account!") {
+            yield SignUpError(
+              message: USED_EMAIL_ERROR,
+              confirmPassword: event.confirmPassword,
+              password: event.password,
+              username: event.username,
+              email: event.email,
+              confirmPasswordErrorVisibility: false,
+              emailErrorVisibility: false,
+              passwordErrorVisibility: false,
+              usernameErrorVisibility: false,
+              serverErrorVisibility: true,
+              firstname: event.firstname,
+              lastname: event.lastname,
+              firstnameErrorVisibility: false,
+              lastnameErrorVisibility: false,
             );
           } else {
             yield Loaded(token: token);

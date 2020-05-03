@@ -57,27 +57,35 @@ class SignIn extends StatelessWidget {
               return LoginEmptyDisplay();
             } else if (state is EmptySignUpDisplay) {
               return RegisterEmptyDisplay(
-                  username: null,
-                  password: "",
-                  email: "",
-                  confirmPassword: "",
-                  usernameErrorVisibility: false,
-                  passwordErrorVisibility: false,
-                  emailErrorVisibility: false,
-                  confirmPasswordErrorVisibility: false,
-                  serverErrorVisibility: false);
+                username: "",
+                password: "",
+                email: "",
+                confirmPassword: "",
+                usernameErrorVisibility: false,
+                passwordErrorVisibility: false,
+                emailErrorVisibility: false,
+                confirmPasswordErrorVisibility: false,
+                serverErrorVisibility: false,
+                firstname: "",
+                lastname: "", firstnameErrorVisibility: false, lastnameErrorVisibility: false, message: "",
+              );
             } else if (state is SignUpError) {
               return new RegisterEmptyDisplay(
-                  username: state.username,
-                  password: state.password,
-                  email: state.email,
-                  confirmPassword: state.confirmPassword,
-                  usernameErrorVisibility: state.usernameErrorVisibility,
-                  passwordErrorVisibility: state.passwordErrorVisibility,
-                  emailErrorVisibility: state.emailErrorVisibility,
-                  confirmPasswordErrorVisibility:
-                      state.confirmPasswordErrorVisibility,
-                  serverErrorVisibility: state.serverErrorVisibility);
+                username: state.username,
+                password: state.password,
+                email: state.email,
+                confirmPassword: state.confirmPassword,
+                usernameErrorVisibility: state.usernameErrorVisibility,
+                passwordErrorVisibility: state.passwordErrorVisibility,
+                emailErrorVisibility: state.emailErrorVisibility,
+                confirmPasswordErrorVisibility:
+                    state.confirmPasswordErrorVisibility,
+                serverErrorVisibility: state.serverErrorVisibility,
+                firstname: state.firstname,
+                lastname: state.lastname,
+                firstnameErrorVisibility: state.firstnameErrorVisibility,
+                lastnameErrorVisibility: state.lastnameErrorVisibility, message: state.message,
+              );
             }
           },
         )
