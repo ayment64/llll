@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:llll/Core/Platform/Network_info.dart';
 import 'package:llll/Core/Presentation_logic/Utils/Input_checker.dart';
 import 'package:llll/Core/Presentation_logic/Utils/register_input_cheker.dart';
+import 'package:llll/Features/Profile_submitting/Presentation/bloc/profile_submitting_bloc.dart';
 import 'package:llll/Features/Sign_in/Data/Repositories/User_repository_impl.dart';
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Login.dart';
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
@@ -32,6 +33,8 @@ void init() {
   // ? Data sources
   sl.registerLazySingleton<UserRemoteDataSource>(
       () => UserRemoteDataSourceImpl(client: sl()));
+  //* feature Profiling
+  sl.registerFactory(() => ProfileSubmittingBloc());
 
   //* core
   sl.registerLazySingleton(() => InputChecker());

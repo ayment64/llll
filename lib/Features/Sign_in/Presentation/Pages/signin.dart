@@ -10,7 +10,7 @@ class SigninPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Arround Oder')),
+   
       body: BlocProvider(builder: (_)=> sl<LoginBloc>(),child: SignIn()),
     );
   }

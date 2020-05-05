@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:llll/Core/Routing/Routing.dart';
+import 'package:llll/Features/Profile_submitting/Presentation/Pages/ProfileEditingPage.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorPassword.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorServer.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorUsername.dart';
-import 'package:llll/Features/Sign_in/Presentation/Widgets/Loaded_widjet.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Loadin_widget.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Login_widjet.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Signup_widjet.dart';
@@ -11,8 +12,10 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/main.dart';
 
 class SignIn extends StatelessWidget {
+  LoginBloc login;
   @override
   Widget build(BuildContext context) {
+  
     return Stack(
       children: <Widget>[
         Container(
@@ -34,8 +37,7 @@ class SignIn extends StatelessWidget {
             } else if (state is Loading) {
               return LoadingWidgetDisplay();
             } else if (state is Loaded) {
-              print(state.token);
-              return LodaedWidgetDisplay();
+              return ProfileEditingPage();
             } else if (state is Error) {
               if (state.message == "Login isues") {
                 print("././././././././././" + state.message);
@@ -67,7 +69,10 @@ class SignIn extends StatelessWidget {
                 confirmPasswordErrorVisibility: false,
                 serverErrorVisibility: false,
                 firstname: "",
-                lastname: "", firstnameErrorVisibility: false, lastnameErrorVisibility: false, message: "",
+                lastname: "",
+                firstnameErrorVisibility: false,
+                lastnameErrorVisibility: false,
+                message: "",
               );
             } else if (state is SignUpError) {
               return new RegisterEmptyDisplay(
@@ -84,7 +89,8 @@ class SignIn extends StatelessWidget {
                 firstname: state.firstname,
                 lastname: state.lastname,
                 firstnameErrorVisibility: state.firstnameErrorVisibility,
-                lastnameErrorVisibility: state.lastnameErrorVisibility, message: state.message,
+                lastnameErrorVisibility: state.lastnameErrorVisibility,
+                message: state.message,
               );
             }
           },

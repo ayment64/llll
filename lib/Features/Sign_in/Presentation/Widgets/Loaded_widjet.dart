@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:llll/Core/Routing/Routing.dart';
 import 'package:llll/main.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
+
+import 'package:flutter/scheduler.dart';
 
 class LodaedWidgetDisplay extends StatelessWidget {
   const LodaedWidgetDisplay({
@@ -10,6 +13,8 @@ class LodaedWidgetDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
+
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(top: 220),
@@ -25,7 +30,9 @@ class LodaedWidgetDisplay extends StatelessWidget {
         color: Colors.white,
         child: Center(
           child: Loading(
-              indicator: BallPulseIndicator(), size: 80.0, color: Colors.lightGreen),
+              indicator: BallPulseIndicator(),
+              size: 80.0,
+              color: Colors.lightGreen),
         ),
       ),
     );

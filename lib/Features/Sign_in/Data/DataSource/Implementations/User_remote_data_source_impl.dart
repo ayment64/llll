@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:device_id/device_id.dart';
 import 'package:llll/Core/Error/Exeptions.dart';
-import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Features/Sign_in/Data/DataSource/User_remote_data_source.dart';
 import 'package:http/http.dart' as http;
 import 'package:llll/Features/Sign_in/Domain/UseCaces/Register.dart';
