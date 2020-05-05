@@ -10,14 +10,17 @@ class ProfileEditing extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-            height: 150,
-            child: Center(
-              child: Text(
-                "Please enter your company info",
-                style: TextStyle(
-                  color: colorwhite,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24
+            height: 200,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(
+                child: Text(
+                  "Please enter your company info",
+                  style: TextStyle(
+                      color: colorwhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      textBaseline: TextBaseline.ideographic),
                 ),
               ),
             ),

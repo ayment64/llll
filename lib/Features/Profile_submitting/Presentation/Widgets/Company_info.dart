@@ -15,7 +15,7 @@ class _CompanyInfoState extends State<CompanyInfo> {
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.fromLTRB(20, 150, 20, 60),
+        margin: EdgeInsets.fromLTRB(2, 150, 2, 5),
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
             color: colordarkblue,
@@ -345,7 +345,28 @@ class _CompanyInfoState extends State<CompanyInfo> {
                     ],
                   )),
                 ],
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(
+                  onPressed: () {}, //since this is only a UI app
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'SFUIDisplay',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  color: colorlightblue,
+                  elevation: 0,
+                  minWidth: 300,
+                  height: 50,
+                  textColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+              ),
             ],
           ),
         ));
