@@ -4,13 +4,13 @@ import 'package:llll/Core/Usecases/Usecases.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Repositories/Profile_repository.dart';
 
 class ProfileEditing implements Usescases<String, ProfileParams> {
-  final ProfileRepository userRepository;
+  final ProfileRepository profileRepository;
 
-  ProfileEditing(this.userRepository);
+  ProfileEditing(this.profileRepository);
 
   @override
   Future<Either<Failure, String>> call(ProfileParams params) async {
-    return await userRepository.profileEdite(params);
+    return await profileRepository.profileEdite(params);
   }
   
 }
