@@ -72,11 +72,11 @@ flutter:
   uses-material-design: true
 
   # To add Asset to your application, add an Asset section, like this:
-  asset:
-   - Asset/image1.png
-   - Asset/images/logo.png
-   - Asset/images/powered_by.png
-   - Asset/images/email_icon.png
-   - Asset/images/password_icon.png
-   - Asset/images/user_icon.png
-   - Asset/images/as.png
+  assets:
+   - Assets/image1.png
+   - Assets/images/logo.png
+   - Assets/images/powered_by.png
+   - Assets/images/email_icon.png
+   - Assets/images/password_icon.png
+   - Assets/images/user_icon.png
+   - Assets/images/as.png
