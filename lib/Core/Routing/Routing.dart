@@ -4,8 +4,8 @@ import 'package:llll/Features/Profile_submitting/Presentation/Pages/ProfileEditi
 
 
 class GoToProfileEditing extends MaterialPageRoute<Null> {
-  GoToProfileEditing()
+  GoToProfileEditing(String token)
       : super(builder: (BuildContext ctx) {
-          return new ProfileEditingPage();
+          return new ProfileEditingPage(token: token,);
         });
 }

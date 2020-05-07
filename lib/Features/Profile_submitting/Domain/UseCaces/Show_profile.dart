@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Core/Usecases/Usecases.dart';
+import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Repositories/Profile_repository.dart';
 
-class ProfileEditing implements Usescases<String, ProfileParams> {
+class ShowProfile implements Usescases<Profile, String> {
   final ProfileRepository profileRepository;
 
-  ProfileEditing(this.profileRepository);
+  ShowProfile(this.profileRepository);
 
   @override
-  Future<Either<Failure, String>> call(ProfileParams params) async {
-    return await profileRepository.profileEdite(params);
+  Future<Either<Failure, Profile>> call(String token) async {
+    return await profileRepository.showProfile(token);
   }
   
 }

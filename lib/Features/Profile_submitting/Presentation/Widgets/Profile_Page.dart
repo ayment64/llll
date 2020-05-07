@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/main.dart';
 
 class ProfilePage extends StatefulWidget {
+  final Profile profileData;
+  final String token;
+
+  const ProfilePage({
+    Key key,
+    @required this.token,
+    @required this.profileData,
+  }) : super(key: key);
   @override
   MapScreenState createState() => MapScreenState();
 }
@@ -11,6 +20,7 @@ class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
+  Profile profileData;
 
   @override
   void initState() {
@@ -20,6 +30,8 @@ class MapScreenState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    profileData = widget.profileData;
+
     return new Scaffold(
         body: new Container(
       color: Colors.white,
@@ -156,7 +168,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.firstname,
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Firstname",
                                   ),
@@ -193,7 +206,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.lastname,
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Last Name",
                                   ),
@@ -230,7 +244,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.email,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Email"),
                                   enabled: !_status,
@@ -265,7 +280,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.companyName,
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Company name",
                                   ),
@@ -302,7 +318,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.companyEmail,
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Company Email",
                                   ),
@@ -339,7 +356,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.phoneNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Phone Number"),
                                   enabled: !_status,
@@ -374,7 +392,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.mobileNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Mobile Number"),
                                   enabled: !_status,
@@ -409,7 +428,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.caompanyWebsite,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Company Website"),
                                   enabled: !_status,
@@ -444,7 +464,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.faxNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Fax Number"),
                                   enabled: !_status,
@@ -479,7 +500,8 @@ class MapScreenState extends State<ProfilePage>
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               new Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.adress,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Your Adress"),
                                   enabled: !_status,
@@ -528,7 +550,8 @@ class MapScreenState extends State<ProfilePage>
                               Flexible(
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 10.0),
-                                  child: new TextFormField (
+                                  child: new TextFormField(
+                                    initialValue: profileData.street,
                                     decoration: const InputDecoration(
                                         hintText: "Enter Street"),
                                     enabled: !_status,
@@ -537,7 +560,8 @@ class MapScreenState extends State<ProfilePage>
                                 flex: 2,
                               ),
                               Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.streetNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Street Number"),
                                   enabled: !_status,
@@ -587,7 +611,8 @@ class MapScreenState extends State<ProfilePage>
                               Flexible(
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 10.0),
-                                  child: new TextFormField (
+                                  child: new TextFormField(
+                                    initialValue: profileData.state,
                                     decoration: const InputDecoration(
                                         hintText: "Enter State"),
                                     enabled: !_status,
@@ -596,7 +621,8 @@ class MapScreenState extends State<ProfilePage>
                                 flex: 2,
                               ),
                               Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue: profileData.zipCode,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Zip Code"),
                                   enabled: !_status,
@@ -605,7 +631,7 @@ class MapScreenState extends State<ProfilePage>
                               ),
                             ],
                           )),
-                                            Padding(
+                      Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 25.0),
                           child: new Row(
@@ -646,8 +672,8 @@ class MapScreenState extends State<ProfilePage>
                               Flexible(
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 10.0),
-                                  child: new TextFormField (
-                                    initialValue: "blahblah",
+                                  child: new TextFormField(
+                                    initialValue: profileData.city,
                                     decoration: const InputDecoration(
                                         hintText: "Enter City"),
                                     enabled: !_status,
@@ -656,7 +682,8 @@ class MapScreenState extends State<ProfilePage>
                                 flex: 2,
                               ),
                               Flexible(
-                                child: new TextFormField (
+                                child: new TextFormField(
+                                  initialValue:profileData.country,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Country"),
                                   enabled: !_status,
@@ -665,7 +692,6 @@ class MapScreenState extends State<ProfilePage>
                               ),
                             ],
                           )),
-
                       !_status ? _getActionButtons() : new Container(),
                     ],
                   ),

@@ -5,12 +5,16 @@ import 'package:llll/Features/Profile_submitting/Presentation/bloc/profile_submi
 import 'package:llll/Injection_container.dart';
 
 class ProfileEditingPage extends StatelessWidget {
-  const ProfileEditingPage({Key key}) : super(key: key);
+  final String token;
+  const ProfileEditingPage({Key key,@required this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("-------------------------------------------------------------------");
+    print(token);
+
     return Scaffold(
-      body: BlocProvider(builder: (_)=> sl<ProfileSubmittingBloc>(),child: ProfileEditing()),
+      body: BlocProvider(builder: (_)=> sl<ProfileSubmittingBloc>(),child: ProfileEditing(token: token,)),
     );
   }
 }

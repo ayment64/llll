@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:llll/Core/Routing/Routing.dart';
+import 'package:llll/Core/widgets/Loadin_widget.dart';
 import 'package:llll/Features/Profile_submitting/Presentation/Pages/ProfileEditingPage.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorPassword.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorServer.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Errors/Login_widjet_ErrorUsername.dart';
-import 'package:llll/Features/Sign_in/Presentation/Widgets/Loadin_widget.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Login_widjet.dart';
 import 'package:llll/Features/Sign_in/Presentation/Widgets/Signup_widjet.dart';
 import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
@@ -15,19 +14,16 @@ class SignIn extends StatelessWidget {
   LoginBloc login;
   @override
   Widget build(BuildContext context) {
-  
     return Stack(
       children: <Widget>[
-        Container(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(90, 40, 90, 110),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: colorwhite,
-                  image: DecorationImage(
-                      image: AssetImage('Assets/image1.png'),
-                      alignment: Alignment.topCenter)),
-            ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(90, 40, 90, 110),
+          child: Container(
+            decoration: BoxDecoration(
+                color: colorwhite,
+                image: DecorationImage(
+                    image: AssetImage('Assets/image1.png'),
+                    alignment: Alignment.topCenter)),
           ),
         ),
         BlocBuilder<LoginBloc, LoginState>(
@@ -37,7 +33,8 @@ class SignIn extends StatelessWidget {
             } else if (state is Loading) {
               return LoadingWidgetDisplay();
             } else if (state is Loaded) {
-              return ProfileEditingPage();
+            print(state.token);
+              return ProfileEditingPage(token: state.token);
             } else if (state is Error) {
               if (state.message == "Login isues") {
                 print("././././././././././" + state.message);

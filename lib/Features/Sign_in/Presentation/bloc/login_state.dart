@@ -12,7 +12,8 @@ class EmptySignUpDisplay extends LoginState {}
 
 class Loaded extends LoginState {
   final String token;
-  Loaded({@required this.token}) : super([token]);
+  
+  Loaded({@required this.token}) { print(token);}
 }
 
 class Error extends LoginState {
