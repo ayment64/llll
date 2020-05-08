@@ -46,12 +46,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemaoteDataSourse {
               'Authorization': 'Bearer $token',
               'Accept': 'application/json'
             },
-            body:json.encode(profiledata.toJson()));
+            body: json.encode(profiledata.toJson()));
     print(json.encode(profiledata.toJson()));
     print(profiledata.toJson());
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
-      print(responseJson['msg']);
+    
       return responseJson['msg'];
     } else {
       throw ServerExeption();
