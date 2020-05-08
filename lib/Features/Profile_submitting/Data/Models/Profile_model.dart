@@ -55,7 +55,6 @@ class ProfileModel extends Profile {
         state: json['Partner']["state"], //zipCode
         zipCode: json['Partner']["zipCode"],
         city: json['Partner']["city"],
-        country: json['Partner']["country"]
-        );
+        country: json['Partner']["country"]);
   }
 }

@@ -53,6 +53,6 @@ class Profile {
         'zip': zipCode,
         'country': country,
         'long': 0,
-        'lat':0
+        'lat': 0
       };
 }
