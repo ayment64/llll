@@ -16,14 +16,19 @@ class ProfileRepositoryImpl implements ProfileRepository {
       {@required this.remoteDataSource, @required this.networkInfo});
 
   @override
-  Future<Either<Failure, String>> profileEdite(ProfileParams params) {
-    // TODO: implement profileEdite
-    return null;
+  Future<Either<Failure, String>> profileEdite(ProfileParams params) async{
+ try {
+      networkInfo.isConnected;
+      response = await remoteDataSource.profileEdite(params);
+        return Right(response);
+
+    } on ServerExeption {
+      return Left(ServerFailure());
+    }
   }
 
   @override
   Future<Either<Failure, Profile>> showProfile(String token) async{
-    
    try {
       networkInfo.isConnected;
       response = await remoteDataSource.showEdite(token);

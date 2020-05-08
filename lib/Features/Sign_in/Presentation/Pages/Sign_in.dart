@@ -11,7 +11,7 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/main.dart';
 
 class SignIn extends StatelessWidget {
-  LoginBloc login;
+ 
   @override
   Widget build(BuildContext context) {
     return Stack(

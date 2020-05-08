@@ -28,7 +28,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemaoteDataSourse {
     final responseJson = json.decode(response.body);
     if (response.statusCode == 200) {
       Profile profile = ProfileModel.fromJson(responseJson);
-      print("_-_-_-_--_-_-_--_-_-_-_"+profile.firstname);
+      print("_-_-_-_--_-_-_--_-_-_-_" + profile.firstname);
       return profile;
     } else {
       throw ServerExeption();
@@ -36,8 +36,25 @@ class ProfileRemoteDataSourceImpl implements ProfileRemaoteDataSourse {
   }
 
   @override
-  Future<String> profileEdite(ProfileParams profileParams) {
-    // TODO: implement showEdite
-    return null;
+  Future<String> profileEdite(ProfileParams params) async {
+    final token = params.token;
+    final profiledata = params.profileData;
+    final response =
+        await http.post("http://dev.aroundorder.com/api/user/editProfil",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json'
+            },
+            body: json.encode(profiledata.toJson()));
+    print(json.encode(profiledata.toJson()));
+    print(profiledata.toJson());
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson['msg']);
+      return responseJson['msg'];
+    } else {
+      throw ServerExeption();
+    }
   }
 }

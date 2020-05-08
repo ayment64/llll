@@ -16,4 +16,4 @@ class ShowProfile implements Usescases<Profile, String> {
   
 }
 
-class ProfileParams {}
+

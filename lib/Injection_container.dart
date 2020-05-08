@@ -13,6 +13,7 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'Features/Profile_submitting/Data/DataSource/Implementations/Profile_remote_data_source_impl.dart';
 import 'Features/Profile_submitting/Data/DataSource/Profile_remote_data_source.dart';
 import 'Features/Profile_submitting/Domain/Repositories/Profile_repository.dart';
+import 'Features/Profile_submitting/Domain/UseCaces/Profile_editing.dart';
 import 'Features/Sign_in/Data/DataSource/Implementations/User_remote_data_source_impl.dart';
 import 'Features/Sign_in/Data/DataSource/User_remote_data_source.dart';
 import 'Features/Sign_in/Domain/Repositories/User_Repository.dart';
@@ -21,7 +22,7 @@ import 'package:http/http.dart' as http;
 final sl = GetIt.instance;
 
 void init() {
-  //* ---------------------------------  Features Sign in  -----------------------
+  //* ---------------------------------  Features Sign in  ---------------------------------------------
   // ? Bloc
   sl.registerFactory(() => LoginBloc(
         login: sl(),
@@ -40,21 +41,23 @@ void init() {
       () => UserRemoteDataSourceImpl(client: sl()));
   //* ------------------------------------  Features Profiling   -----------------------------------------
   // ? Bloc
-  sl.registerFactory(() => ProfileSubmittingBloc(showProfile: sl()));
+  sl.registerFactory(() => ProfileSubmittingBloc(showProfile: sl(), editProfile: sl()));
   // ? Usecases
   sl.registerLazySingleton(() => ShowProfile(sl()));
+  sl.registerLazySingleton(() => ProfileEditing(sl()));
 
   // ? Repository
   sl.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
   // ? Data Sources
-  sl.registerLazySingleton<ProfileRemaoteDataSourse>(()=>ProfileRemoteDataSourceImpl(client: sl()));
+  sl.registerLazySingleton<ProfileRemaoteDataSourse>(
+      () => ProfileRemoteDataSourceImpl(client: sl()));
 
-  //* core
+  //*------------------------------------------ core  -----------------------------------------------------
   sl.registerLazySingleton(() => InputChecker());
   sl.registerLazySingleton(() => RegisterInputChecker());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
-  //* External
+  //*--------------------------------------- External  ----------------------------------------------------
   sl.registerLazySingleton(() => DataConnectionChecker());
   sl.registerLazySingleton(() => http.Client());
 }

@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:llll/Core/Error/Failure.dart';
 import 'package:llll/Core/Usecases/Usecases.dart';
+import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Repositories/Profile_repository.dart';
+import 'package:meta/meta.dart';
 
 class ProfileEditing implements Usescases<String, ProfileParams> {
   final ProfileRepository profileRepository;
@@ -15,4 +17,9 @@ class ProfileEditing implements Usescases<String, ProfileParams> {
   
 }
 
-class ProfileParams {}
+class ProfileParams {
+ final Profile profileData;
+ final String token;
+
+  ProfileParams({@required this.profileData,@required this.token});
+}

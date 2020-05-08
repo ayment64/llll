@@ -36,4 +36,23 @@ class Profile {
     @required this.city,
     @required this.country,
   });
+  Map<String, dynamic> toJson() => {
+        'firstname': firstname,
+        'lastname': lastname,
+        'email': companyEmail,
+        'company': companyName,
+        'phone': phoneNumber,
+        'mobile': mobileNumber,
+        'fax': faxNumber,
+        'website': caompanyWebsite,
+        'address': adress,
+        'street': street,
+        'street_nb': streetNumber,
+        'state': state,
+        'city': city,
+        'zip': zipCode,
+        'country': country,
+        'long': 0,
+        'lat':0
+      };
 }

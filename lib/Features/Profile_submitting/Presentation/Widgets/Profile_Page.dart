@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
+import 'package:llll/Features/Profile_submitting/Presentation/bloc/profile_submitting_bloc.dart';
 import 'package:llll/main.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -21,16 +23,50 @@ class MapScreenState extends State<ProfilePage>
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
   Profile profileData;
+  String token;
+  Profile profileEditData;
+  String firstname;
+  String lastname;
+  String email;
+  String companyName;
+  String companyEmail;
+  String phoneNumber;
+  String mobileNumber;
+  String caompanyWebsite;
+  String faxNumber;
+  String adress;
+  String street;
+  String streetNumber;
+  String state;
+  String zipCode;
+  String city;
+  String country;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     profileData = widget.profileData;
+    token = widget.token;
+    firstname = profileData.firstname;
+    lastname = profileData.lastname;
+    email = profileData.email;
+    companyEmail = profileData.companyEmail;
+    companyName = profileData.companyName;
+    phoneNumber = profileData.phoneNumber;
+    mobileNumber = profileData.mobileNumber;
+    caompanyWebsite = profileData.caompanyWebsite;
+    faxNumber = profileData.faxNumber;
+    adress = profileData.adress;
+    street = profileData.street;
+    streetNumber = profileData.streetNumber;
+    state = profileData.state;
+    zipCode = profileData.zipCode;
+    city = profileData.city;
+    country = profileData.country;
 
     return new Scaffold(
         body: new Container(
@@ -173,6 +209,9 @@ class MapScreenState extends State<ProfilePage>
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Firstname",
                                   ),
+                                  onChanged: (value) {
+                                    firstname = value;
+                                  },
                                   enabled: !_status,
                                   autofocus: !_status,
                                 ),
@@ -211,6 +250,9 @@ class MapScreenState extends State<ProfilePage>
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Last Name",
                                   ),
+                                  onChanged: (value) {
+                                    lastname = value;
+                                  },
                                   enabled: !_status,
                                   autofocus: !_status,
                                 ),
@@ -249,6 +291,9 @@ class MapScreenState extends State<ProfilePage>
                                   decoration: const InputDecoration(
                                       hintText: "Enter Email"),
                                   enabled: !_status,
+                                  onChanged: (value) {
+                                    email = value;
+                                  },
                                 ),
                               ),
                             ],
@@ -285,6 +330,9 @@ class MapScreenState extends State<ProfilePage>
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Company name",
                                   ),
+                                  onChanged: (value) {
+                                    companyName = value;
+                                  },
                                   enabled: !_status,
                                   autofocus: !_status,
                                 ),
@@ -323,6 +371,9 @@ class MapScreenState extends State<ProfilePage>
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Company Email",
                                   ),
+                                  onChanged: (value) {
+                                    companyEmail = value;
+                                  },
                                   enabled: !_status,
                                   autofocus: !_status,
                                 ),
@@ -360,6 +411,9 @@ class MapScreenState extends State<ProfilePage>
                                   initialValue: profileData.phoneNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Phone Number"),
+                                  onChanged: (value) {
+                                    phoneNumber = value;
+                                  },
                                   enabled: !_status,
                                 ),
                               ),
@@ -396,6 +450,9 @@ class MapScreenState extends State<ProfilePage>
                                   initialValue: profileData.mobileNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Mobile Number"),
+                                  onChanged: (value) {
+                                    mobileNumber = value;
+                                  },
                                   enabled: !_status,
                                 ),
                               ),
@@ -432,6 +489,9 @@ class MapScreenState extends State<ProfilePage>
                                   initialValue: profileData.caompanyWebsite,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Company Website"),
+                                  onChanged: (value) {
+                                    caompanyWebsite = value;
+                                  },
                                   enabled: !_status,
                                 ),
                               ),
@@ -468,6 +528,9 @@ class MapScreenState extends State<ProfilePage>
                                   initialValue: profileData.faxNumber,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Fax Number"),
+                                  onChanged: (value) {
+                                    faxNumber = value;
+                                  },
                                   enabled: !_status,
                                 ),
                               ),
@@ -484,7 +547,7 @@ class MapScreenState extends State<ProfilePage>
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   new Text(
-                                    'Adress ',
+                                    'Address ',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold),
@@ -503,7 +566,10 @@ class MapScreenState extends State<ProfilePage>
                                 child: new TextFormField(
                                   initialValue: profileData.adress,
                                   decoration: const InputDecoration(
-                                      hintText: "Enter Your Adress"),
+                                      hintText: "Enter Your Address"),
+                                  onChanged: (value) {
+                                    adress = value;
+                                  },
                                   enabled: !_status,
                                 ),
                               ),
@@ -554,6 +620,9 @@ class MapScreenState extends State<ProfilePage>
                                     initialValue: profileData.street,
                                     decoration: const InputDecoration(
                                         hintText: "Enter Street"),
+                                    onChanged: (value) {
+                                      street = value;
+                                    },
                                     enabled: !_status,
                                   ),
                                 ),
@@ -565,6 +634,9 @@ class MapScreenState extends State<ProfilePage>
                                   decoration: const InputDecoration(
                                       hintText: "Enter Street Number"),
                                   enabled: !_status,
+                                  onChanged: (value) {
+                                    streetNumber = value;
+                                  },
                                 ),
                                 flex: 2,
                               ),
@@ -615,6 +687,9 @@ class MapScreenState extends State<ProfilePage>
                                     initialValue: profileData.state,
                                     decoration: const InputDecoration(
                                         hintText: "Enter State"),
+                                    onChanged: (value) {
+                                      state = value;
+                                    },
                                     enabled: !_status,
                                   ),
                                 ),
@@ -625,6 +700,9 @@ class MapScreenState extends State<ProfilePage>
                                   initialValue: profileData.zipCode,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Zip Code"),
+                                  onChanged: (value) {
+                                    zipCode = value;
+                                  },
                                   enabled: !_status,
                                 ),
                                 flex: 2,
@@ -676,6 +754,9 @@ class MapScreenState extends State<ProfilePage>
                                     initialValue: profileData.city,
                                     decoration: const InputDecoration(
                                         hintText: "Enter City"),
+                                    onChanged: (value) {
+                                      city = value;
+                                    },
                                     enabled: !_status,
                                   ),
                                 ),
@@ -683,9 +764,12 @@ class MapScreenState extends State<ProfilePage>
                               ),
                               Flexible(
                                 child: new TextFormField(
-                                  initialValue:profileData.country,
+                                  initialValue: profileData.country,
                                   decoration: const InputDecoration(
                                       hintText: "Enter Country"),
+                                  onChanged: (value) {
+                                    country = value;
+                                  },
                                   enabled: !_status,
                                 ),
                                 flex: 2,
@@ -702,6 +786,28 @@ class MapScreenState extends State<ProfilePage>
         ],
       ),
     ));
+  }
+
+  void dispatchGetProfile() {
+    profileEditData = Profile(
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        companyName: companyName,
+        companyEmail: companyEmail,
+        phoneNumber: phoneNumber,
+        mobileNumber: mobileNumber,
+        caompanyWebsite: caompanyWebsite,
+        faxNumber: faxNumber,
+        adress: adress,
+        street: street,
+        streetNumber: streetNumber,
+        state: state,
+        zipCode: zipCode,
+        city: city,
+        country: country);
+    BlocProvider.of<ProfileSubmittingBloc>(context)
+        .dispatch(EditProfile(token: token, profileData: profileEditData));
   }
 
   @override
@@ -728,6 +834,7 @@ class MapScreenState extends State<ProfilePage>
                 color: colorlightblue,
                 onPressed: () {
                   setState(() {
+                    dispatchGetProfile();
                     _status = true;
                     FocusScope.of(context).requestFocus(new FocusNode());
                   });
