@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:llll/Core/Routing/Routing.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/Features/Profile_submitting/Presentation/bloc/profile_submitting_bloc.dart';
 import 'package:llll/main.dart';
@@ -82,24 +83,29 @@ class MapScreenState extends State<ProfilePage>
                   children: <Widget>[
                     Padding(
                         padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                        child: new Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            new Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.black,
-                              size: 22.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 25.0),
-                              child: new Text('PROFILE',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
-                                      fontFamily: 'sans-serif-light',
-                                      color: Colors.black)),
-                            )
-                          ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, new ToHome(token));
+                          },
+                          child: new Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.black,
+                                size: 22.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 25.0),
+                                child: new Text('PROFILE',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0,
+                                        fontFamily: 'sans-serif-light',
+                                        color: Colors.black)),
+                              )
+                            ],
+                          ),
                         )),
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),

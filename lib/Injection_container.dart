@@ -19,6 +19,8 @@ import 'Features/Sign_in/Data/DataSource/User_remote_data_source.dart';
 import 'Features/Sign_in/Domain/Repositories/User_Repository.dart';
 import 'package:http/http.dart' as http;
 
+import 'Features/home/Presentation/bloc/home_bloc.dart';
+
 final sl = GetIt.instance;
 
 void init() {
@@ -41,7 +43,8 @@ void init() {
       () => UserRemoteDataSourceImpl(client: sl()));
   //* ------------------------------------  Features Profiling   -----------------------------------------
   // ? Bloc
-  sl.registerFactory(() => ProfileSubmittingBloc(showProfile: sl(), editProfile: sl()));
+  sl.registerFactory(
+      () => ProfileSubmittingBloc(showProfile: sl(), editProfile: sl()));
   // ? Usecases
   sl.registerLazySingleton(() => ShowProfile(sl()));
   sl.registerLazySingleton(() => ProfileEditing(sl()));
@@ -52,8 +55,10 @@ void init() {
   // ? Data Sources
   sl.registerLazySingleton<ProfileRemaoteDataSourse>(
       () => ProfileRemoteDataSourceImpl(client: sl()));
+  //*-----------------------------------------  home  -----------------------------------------------------
 
-  //*------------------------------------------ core  -----------------------------------------------------
+  sl.registerFactory(() => HomeBloc());
+  //*-----------------------------------------  core  -----------------------------------------------------
   sl.registerLazySingleton(() => InputChecker());
   sl.registerLazySingleton(() => RegisterInputChecker());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
