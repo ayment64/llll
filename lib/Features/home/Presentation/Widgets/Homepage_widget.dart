@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:llll/Core/Routing/Routing.dart';
 import 'package:llll/Features/home/Presentation/bloc/home_bloc.dart';
 
@@ -88,58 +89,297 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         padding:
                             EdgeInsets.only(left: 0.0, right: 0.0, top: 2.0),
                         child: new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             InkWell(
                               onTap: () {
                                 Navigator.push(
                                     context, new ToProfile(widget.token));
                               },
-                              child: Container(
-                                height: 150,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Center(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.person,
-                                      size: 60,
-                                    ),
-                                    Text(
-                                      "Profile",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                )),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                    right: BorderSide(color: Color(0x66333333)),
+                                    bottom:
+                                        BorderSide(color: Color(0x66333333)),
+                                  )),
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(bottom:5.0),
+                                        child: Container(
+                                            width: 60.0,
+                                            height: 60.0,
+                                            decoration: new BoxDecoration(
+                                              image: new DecorationImage(
+                                                image: new ExactAssetImage(
+                                                    'Assets/images/avatar.png'),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
+                                      ),
+                                      Text(
+                                        "Profile",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )),
+                                ),
                               ),
                             ),
                             InkWell(
                               onTap: () {
                                 dispatchGoToCategorys();
                               },
-                              child: Container(
-                                height: 150,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Center(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.settings,
-                                      size: 60,
-                                    ),
-                                    Text(
-                                      "Category",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                )),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                    left: BorderSide(color: Color(0x66333333)),
+                                    bottom:
+                                        BorderSide(color: Color(0x66333333)),
+                                  )),
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                          width: 60.0,
+                                          height: 60.0,
+                                          decoration: new BoxDecoration(
+                                            image: new DecorationImage(
+                                              image: new ExactAssetImage(
+                                                  'Assets/images/category.png'),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )),
+                                      Text(
+                                        "Category",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(left: 0.0, right: 0.0, top: 2.0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context, new ToProfile(widget.token));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                    right: BorderSide(color: Color(0x66333333)),
+                                    bottom:
+                                        BorderSide(color: Color(0x66333333)),
+                                  )),
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:  EdgeInsets.only(bottom: 5.0),
+                                        child: Container(
+                                            width: 60.0,
+                                            height: 60.0,
+                                            decoration: new BoxDecoration(
+                                              image: new DecorationImage(
+                                                image: new ExactAssetImage(
+                                                    'Assets/images/Orders.png'),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
+                                      ),
+                                      Text(
+                                        "Orders",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                dispatchGoToCategorys();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                    left: BorderSide(color: Color(0x66333333)),
+                                    bottom:
+                                        BorderSide(color: Color(0x66333333)),
+                                  )),
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
+                                        child: Container(
+                                            width: 60.0,
+                                            height: 60.0,
+                                            decoration: new BoxDecoration(
+                                              image: new DecorationImage(
+                                                image: new ExactAssetImage(
+                                                    'Assets/images/invoices.png'),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
+                                      ),
+                                      Text(
+                                        "invoices",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(left: 0.0, right: 0.0, top: 2.0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context, new ToProfile(widget.token));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                    right: BorderSide(color: Color(0x66333333)),
+                                    bottom:
+                                        BorderSide(color: Color(0x66333333)),
+                                  )),
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:  EdgeInsets.only(bottom:5.0),
+                                        child: Container(
+                                            width: 60.0,
+                                            height: 60.0,
+                                            decoration: new BoxDecoration(
+                                              image: new DecorationImage(
+                                                image: new ExactAssetImage(
+                                                    'Assets/images/calendar.png'),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
+                                      ),
+                                      Text(
+                                        "Calender",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                dispatchGoToCategorys();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                    left: BorderSide(color: Color(0x66333333)),
+                                    bottom:
+                                        BorderSide(color: Color(0x66333333)),
+                                  )),
+                                  child: Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
+                                        child: Container(
+                                            width: 60.0,
+                                            height: 60.0,
+                                            decoration: new BoxDecoration(
+                                              image: new DecorationImage(
+                                                image: new ExactAssetImage(
+                                                    'Assets/images/logoutpng.png'),
+                                                fit: BoxFit.fitHeight,
+                                              ),
+                                            )),
+                                      ),
+                                      Text(
+                                        "Log out",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )),
+                                ),
                               ),
                             ),
                           ],

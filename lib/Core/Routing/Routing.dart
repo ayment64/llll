@@ -14,6 +14,6 @@ class ToHome extends MaterialPageRoute<Null> {
 class ToProfile extends MaterialPageRoute<Null> {
   ToProfile(String token)
       : super(builder: (BuildContext ctx) {
-          return new ProfileEditingPage(token: token);
+          return new ProfileEditingPage(token: token,fromHome: true,);
         });
 }

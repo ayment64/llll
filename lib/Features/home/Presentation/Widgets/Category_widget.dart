@@ -96,9 +96,16 @@ class CategoryWidget extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Icon(
-                                      Icons.add_location,
-                                      size: 60,
+                                    Container(
+                                      width: 60.0,
+                                      height: 60.0,
+                                      decoration: new BoxDecoration(
+                                        image: new DecorationImage(
+                                          image: new ExactAssetImage(
+                                              'Assets/images/addlocation.png'),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
                                     Text(
                                       "Add Location",
@@ -117,9 +124,16 @@ class CategoryWidget extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(
-                                    Icons.settings,
-                                    size: 60,
+                                  Container(
+                                    width: 60.0,
+                                    height: 60.0,
+                                    decoration: new BoxDecoration(
+                                      image: new DecorationImage(
+                                        image: new ExactAssetImage(
+                                            'Assets/images/category.png'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                   Text(
                                     "Add Category",

@@ -34,7 +34,7 @@ class SignIn extends StatelessWidget {
               return LoadingWidgetDisplay();
             } else if (state is Loaded) {
             print(state.token);
-              return ProfileEditingPage(token: state.token);
+              return ProfileEditingPage(token: state.token,fromHome: false,);
             } else if (state is Error) {
               if (state.message == "Login isues") {
                 print("././././././././././" + state.message);

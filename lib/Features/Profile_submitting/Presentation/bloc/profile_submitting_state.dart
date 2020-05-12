@@ -8,8 +8,10 @@ class Loading extends ProfileSubmittingState {}
 
 class Loaded extends ProfileSubmittingState {
   final Profile profile;
+  final bool fromHome;
 
   Loaded({
     @required this.profile,
+    @required this.fromHome,
   });
 }

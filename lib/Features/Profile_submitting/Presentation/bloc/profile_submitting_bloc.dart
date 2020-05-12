@@ -32,7 +32,9 @@ class ProfileSubmittingBloc
         print("unexpected error");
       }, (profile) async* {
         yield Loaded(
+          fromHome: event.fromHome,
           profile: profile,
+
         );
       });
     } else if (event is EditProfile) {

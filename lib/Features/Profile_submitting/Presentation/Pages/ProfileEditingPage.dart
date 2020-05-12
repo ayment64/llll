@@ -6,7 +6,8 @@ import 'package:llll/Injection_container.dart';
 
 class ProfileEditingPage extends StatelessWidget {
   final String token;
-  const ProfileEditingPage({Key key,@required this.token}) : super(key: key);
+  final bool fromHome;
+  const ProfileEditingPage({Key key,@required this.token,@required this.fromHome}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ProfileEditingPage extends StatelessWidget {
     print(token);
 
     return Scaffold(
-      body: BlocProvider(builder: (_)=> sl<ProfileSubmittingBloc>(),child: ProfileEditing(token: token,)),
+      body: BlocProvider(builder: (_)=> sl<ProfileSubmittingBloc>(),child: ProfileEditing(token: token,fromHome: fromHome,)),
     );
   }
 }

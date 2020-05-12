@@ -6,8 +6,9 @@ abstract class ProfileSubmittingEvent extends Equatable {
 
 class GetProfile extends ProfileSubmittingEvent {
   final String token;
+  final bool fromHome;
 
-  GetProfile({@required this.token});
+  GetProfile({@required this.token, @required this.fromHome});
 }
 
 class EditProfile extends ProfileSubmittingEvent {
