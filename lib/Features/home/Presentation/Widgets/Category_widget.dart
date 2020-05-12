@@ -108,7 +108,7 @@ class CategoryWidget extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "Add Location",
+                                       "Add Location",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     )

@@ -116,7 +116,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Padding(
-                                        padding: EdgeInsets.only(bottom:5.0),
+                                        padding: EdgeInsets.only(bottom: 5.0),
                                         child: Container(
                                             width: 60.0,
                                             height: 60.0,
@@ -213,7 +213,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Padding(
-                                        padding:  EdgeInsets.only(bottom: 5.0),
+                                        padding: EdgeInsets.only(bottom: 5.0),
                                         child: Container(
                                             width: 60.0,
                                             height: 60.0,
@@ -314,7 +314,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Padding(
-                                        padding:  EdgeInsets.only(bottom:5.0),
+                                        padding: EdgeInsets.only(bottom: 5.0),
                                         child: Container(
                                             width: 60.0,
                                             height: 60.0,
@@ -338,7 +338,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                             InkWell(
                               onTap: () {
-                                dispatchGoToCategorys();
+                                Navigator.push(context, new ToLogin());
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
