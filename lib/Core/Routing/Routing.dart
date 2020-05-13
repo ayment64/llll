@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:llll/Features/Profile_submitting/Presentation/Pages/ProfileEditingPage.dart';
 import 'package:llll/Features/Sign_in/Presentation/Pages/signin.dart';
 import 'package:llll/Features/home/Presentation/Pages/Home_page.dart';
+import 'package:llll/Features/maps/Presentation/Pages/maps_page.dart';
 
 
 
@@ -11,7 +12,12 @@ class ToHome extends MaterialPageRoute<Null> {
           return new HomePage(token: token,);
         });
 }
-
+class ToMaps extends MaterialPageRoute<Null> {
+  ToMaps(String token)
+      : super(builder: (BuildContext ctx) {
+          return new MapsPage(token: token,);
+        });
+}
 class ToProfile extends MaterialPageRoute<Null> {
   ToProfile(String token)
       : super(builder: (BuildContext ctx) {

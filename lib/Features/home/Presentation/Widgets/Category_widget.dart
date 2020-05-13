@@ -86,7 +86,7 @@ class CategoryWidget extends StatelessWidget {
                           children: <Widget>[
                             InkWell(
                               onTap: () {
-                                Navigator.push(context, new ToProfile(token));
+                                Navigator.push(context, new ToMaps(token));
                               },
                               child: Container(
                                 height: 150,
