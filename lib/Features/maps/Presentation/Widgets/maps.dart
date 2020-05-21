@@ -65,7 +65,6 @@ class _MapsState extends State<Maps> {
           circles: Set.from(circles),
         ),
          
-         
         Padding(
           padding: const EdgeInsets.all(40.0),
           child: Container(
@@ -181,13 +180,14 @@ class _MapsState extends State<Maps> {
   }
 
   void addlocation() {
-    onlypoint = null;
+   
     Location location = Location(
         long: onlypoint.longitude.toString(),
         lat: onlypoint.latitude.toString(),
         city: null,
         km: "1000",
         quant: null);
+         onlypoint = null;
 
     BlocProvider.of<MapsBloc>(context).dispatch(SaveLocationEvent(
         location: LocationParams(location: location, token: token)));
