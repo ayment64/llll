@@ -22,7 +22,7 @@ class _MapsState extends State<Maps> {
   List<Marker> markers = [];
   List<Circle> circles = [];
   bool filled;
-  double km =0;
+  double km =2;
   LatLng onlypoint;
   GoogleMapController controller;
   Completer<GoogleMapController> _controller = Completer();
@@ -32,10 +32,11 @@ class _MapsState extends State<Maps> {
     setState(() {
       this.controller = controller;
     });
+    if (widget.locations.length>0){
     for (Location l in widget.locations) {
       addmarkerinit(LatLng(double.parse(l.lat), double.parse(l.long)));
       km = double.parse(l.km);
-    }
+    }}
   }
 
   @override
@@ -63,28 +64,7 @@ class _MapsState extends State<Maps> {
           markers: Set.from(markers),
           circles: Set.from(circles),
         ),
-          Padding(
-             padding: const EdgeInsets.only(left : 50.0),
-             child: Transform(
-               alignment: FractionalOffset.topLeft,
-              // Rotate sliders by 90 degrees
-              transform: new Matrix4.identity()..rotateZ(90 * 3.1415927 / 180),
-                child: new Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  new Slider(
-                    value: km,
-                    min: 0.0,
-                    max: 100.0,
-                    divisions: 10,
-                    label: '$km km',
-                    onChanged: (double newValue) {
-                      setState(() {
-                        km = newValue;
-                      });
-                    },
-                  ),])),
-           ),
+         
          
         Padding(
           padding: const EdgeInsets.all(40.0),
