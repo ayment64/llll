@@ -6,8 +6,9 @@ import 'package:llll/Features/home/Presentation/bloc/home_bloc.dart';
 
 class Home extends StatefulWidget {
   final String token;
+  final String from;
 
-  const Home({Key key, this.token}) : super(key: key);
+  const Home({Key key, this.token, this.from}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -25,13 +26,16 @@ class _HomeState extends State<Home> {
     return Container(
       color: Colors.white,
       child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-        return Container(
-          child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-            if(state is HomeCategory)
-             return CategoryWidget(token:token);
-            return HomePageWidget(token: token);
-          }),
-        );
+        if (widget.from != "cat") {
+          return Container(
+            child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+              if (state is HomeCategory) return CategoryWidget(token: token);
+              return HomePageWidget(token: token);
+            }),
+          );
+        } else {
+          return CategoryWidget(token: token);
+        }
       }),
     );
   }

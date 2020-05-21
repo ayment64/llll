@@ -13,6 +13,32 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ListView(
       children: <Widget>[
+        Padding(
+            padding: EdgeInsets.only(left: 20.0, top: 20.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context, new ToHome(token));
+              },
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                    size: 22.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 25.0),
+                    child: new Text('Categories',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            fontFamily: 'sans-serif-light',
+                            color: Colors.black)),
+                  )
+                ],
+              ),
+            )),
         Column(
           children: <Widget>[
             new Container(
@@ -108,7 +134,7 @@ class CategoryWidget extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                       "Add Location",
+                                      "Add Location",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     )

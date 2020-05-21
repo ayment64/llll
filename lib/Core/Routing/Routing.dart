@@ -6,10 +6,17 @@ import 'package:llll/Features/maps/Presentation/Pages/maps_page.dart';
 
 
 
+
 class ToHome extends MaterialPageRoute<Null> {
   ToHome(String token)
       : super(builder: (BuildContext ctx) {
           return new HomePage(token: token,);
+        });
+}
+class ToCategories extends MaterialPageRoute<Null> {
+  ToCategories(String token)
+      : super(builder: (BuildContext ctx) {
+          return new HomePage(token: token,from:'cat');
         });
 }
 class ToMaps extends MaterialPageRoute<Null> {

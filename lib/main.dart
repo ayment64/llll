@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           primaryColor: colorlightblue,
           accentColor: colordarkblue,
           textSelectionHandleColor: colorwhite,
-          primaryTextTheme: TextTheme(title: TextStyle(color: Colors.white))),
+          primaryTextTheme: TextTheme(headline6: TextStyle(color: Colors.white))),
       home: SigninPage(),
     );
   }

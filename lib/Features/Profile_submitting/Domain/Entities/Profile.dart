@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import "package:meta/meta.dart";
 
 class Profile {
   final String firstname;
@@ -37,22 +37,22 @@ class Profile {
     @required this.country,
   });
   Map<String, dynamic> toJson() => {
-        'firstname': firstname,
-        'lastname': lastname,
-        'email': companyEmail,
-        'company': companyName,
-        'phone': phoneNumber,
-        'mobile': mobileNumber,
-        'fax': faxNumber,
-        'website': caompanyWebsite,
-        'address': adress,
-        'street': street,
-        'street_nb': streetNumber,
-        'state': state,
-        'city': city,
-        'zip': zipCode,
-        'country': country,
-        'long': 0,
-        'lat': 0
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": companyEmail,
+        "company": companyName,
+        "phone": phoneNumber,
+        "mobile": mobileNumber,
+        "fax": faxNumber,
+        "website": caompanyWebsite,
+        "address": adress,
+        "street": street,
+        "street_nb": streetNumber,
+        "state": state,
+        "city": city,
+        "zip": zipCode,
+        "country": country,
+        "long": 0,
+        "lat": 0
       };
 }

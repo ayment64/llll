@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:llll/Features/home/Presentation/bloc/home_bloc.dart';
 import 'package:llll/Injection_container.dart';
 
@@ -8,7 +7,8 @@ import 'Home.dart';
 
 class HomePage extends StatelessWidget {
   final String token;
-  const HomePage({Key key,@required this.token}) : super(key: key);
+  final String from;
+  const HomePage({Key key,@required this.token, this.from}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     print(token);
 
     return Scaffold(
-      body: BlocProvider(builder: (_)=> sl<HomeBloc>(),child: Home(token:token)),
+      body: BlocProvider(builder: (_)=> sl<HomeBloc>(),child: Home(token:token,from: from,)),
     );
   }
 }
