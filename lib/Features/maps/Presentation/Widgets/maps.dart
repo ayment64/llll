@@ -41,6 +41,7 @@ class _MapsState extends State<Maps> {
 
   @override
   Widget build(BuildContext context) {
+    token = widget.token;
     return Stack(
       children: <Widget>[
         GoogleMap(
@@ -185,7 +186,7 @@ class _MapsState extends State<Maps> {
         long: onlypoint.longitude.toString(),
         lat: onlypoint.latitude.toString(),
         city: null,
-        km: "1000",
+        km: "30",
         quant: null);
          onlypoint = null;
 
