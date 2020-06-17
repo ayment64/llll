@@ -14,8 +14,8 @@ class LoginEmptyDisplay extends StatefulWidget {
 }
 
 class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
-  String username;
-  String password;
+  String username = "ayment64@gmail.com";
+  String password = "1234567";
   bool passwordChecker = false;
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
               child: Container(
                 color: colorwhite,
                 child: TextFormField(
+                  initialValue: "ayment64@gmail.com",
                   onChanged: (value) {
                     username = value;
                   },
@@ -56,6 +57,7 @@ class _LoginEmptyDisplayState extends State<LoginEmptyDisplay> {
             Container(
               color: colorwhite,
               child: TextFormField(
+                initialValue: "1234567",
                 onChanged: (value) {
                   password = value;
                   if (password.length < 6)

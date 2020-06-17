@@ -3,6 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:llll/Core/Platform/Network_info.dart';
 import 'package:llll/Core/Presentation_logic/Utils/Input_checker.dart';
 import 'package:llll/Core/Presentation_logic/Utils/register_input_cheker.dart';
+import 'package:llll/Features/Category/Data/DataSource/Category_remaote_data_sourse.dart';
+import 'package:llll/Features/Category/Data/DataSource/Implementation/Category_remaote_data_sourse_impl.dart';
+import 'package:llll/Features/Category/Domain/Repositories/Category_repository.dart';
+import 'package:llll/Features/Category/Domain/UseCaces/Init_list_sub_category.dart';
+import 'package:llll/Features/Category/Presentation/bloc/add_category_bloc.dart';
 import 'package:llll/Features/Profile_submitting/Data/Repositories/Profile_repository_impl.dart';
 import 'package:llll/Features/Profile_submitting/Domain/UseCaces/Show_profile.dart';
 import 'package:llll/Features/Profile_submitting/Presentation/bloc/profile_submitting_bloc.dart';
@@ -13,6 +18,8 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/Features/maps/Data/DataSource/Implementations/Location_remote_data_source_impl.dart';
 import 'package:llll/Features/maps/Domain/Repositories/Location_repository.dart';
 import 'package:llll/Features/maps/Domain/UseCaces/Show_location.dart';
+import 'Features/Category/Data/Repositories/Category_repository_Impl.dart';
+import 'Features/Category/Domain/UseCaces/Init_list_category.dart';
 import 'Features/Profile_submitting/Data/DataSource/Implementations/Profile_remote_data_source_impl.dart';
 import 'Features/Profile_submitting/Data/DataSource/Profile_remote_data_source.dart';
 import 'Features/Profile_submitting/Domain/Repositories/Profile_repository.dart';
@@ -31,7 +38,6 @@ import 'package:llll/Features/maps/Domain/UseCaces/Add_location.dart';
 final sl = GetIt.instance;
 
 void init() {
-  
   //* ---------------------------------  Features Sign in  ---------------------------------------------
   // ? Bloc
   sl.registerFactory(() => LoginBloc(
@@ -49,6 +55,8 @@ void init() {
   // ? Data sources
   sl.registerLazySingleton<UserRemoteDataSource>(
       () => UserRemoteDataSourceImpl(client: sl()));
+
+  //! ----------------------------------------------------------------------------------------------
   //* ------------------------------------  Features Profiling   -----------------------------------------
   // ? Bloc
   sl.registerFactory(
@@ -63,22 +71,48 @@ void init() {
   // ? Data Sources
   sl.registerLazySingleton<ProfileRemaoteDataSourse>(
       () => ProfileRemoteDataSourceImpl(client: sl()));
+  //! ----------------------------------------------------------------------------------------------
   //*-----------------------------------------  home  -----------------------------------------------------
 
   sl.registerFactory(() => HomeBloc());
+  //! ----------------------------------------------------------------------------------------------
   //*-----------------------------------------  maps  -----------------------------------------------------
-  sl.registerFactory(() => MapsBloc(addLocation: sl(),showLocation: sl()));
+  sl.registerFactory(() => MapsBloc(addLocation: sl(), showLocation: sl()));
   // ? Usescases
   sl.registerLazySingleton(() => AddLocation(locationRepository: sl()));
   sl.registerLazySingleton(() => ShowLocation(locationRepository: sl()));
   // ? Repositories
-  sl.registerLazySingleton<LocationRepository>(() => MapRepositoryImpl(networkInfo: sl(),remoteDataSource: sl()));
+  sl.registerLazySingleton<LocationRepository>(
+      () => MapRepositoryImpl(networkInfo: sl(), remoteDataSource: sl()));
   // ? Data source
-  sl.registerLazySingleton<LocationRemaoteDataSourse>(() => LocationRemoteDataSourceImpl(client: sl()));
+  sl.registerLazySingleton<LocationRemaoteDataSourse>(
+      () => LocationRemoteDataSourceImpl(client: sl()));
+  //! ----------------------------------------------------------------------------------------------
+  //* --------------------------------------- Category ----------------------------------------------------
+  // ? Bloc
+  sl.registerFactory(
+      () => AddCategoryBloc(initListCategory: sl(), initListSubCategory: sl()));
+  // ? Use cases
+  sl.registerLazySingleton(() => InitListCategory(categoryRepositor: sl()));
+  sl.registerLazySingleton(() => InitListSubCategory(categoryRepositor: sl()));
+
+  // ? Repository
+  sl.registerLazySingleton<CategoryRepository>(
+      () => CategoryRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+  // ? Data sources
+  sl.registerLazySingleton<CategoryRemaoteDataSourse>(
+      () => CategoryRemaoteDataSourseimpl(client: sl()));
+
+  //! ----------------------------------------------------------------------------------------------
+  //! ----------------------------------------------------------------------------------------------
+  //! ----------------------------------------------------------------------------------------------
   //*-----------------------------------------  core  -----------------------------------------------------
   sl.registerLazySingleton(() => InputChecker());
   sl.registerLazySingleton(() => RegisterInputChecker());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  //! ----------------------------------------------------------------------------------------------
+  //! ----------------------------------------------------------------------------------------------
+  //! ----------------------------------------------------------------------------------------------
   //*--------------------------------------- External  ----------------------------------------------------
   sl.registerLazySingleton(() => DataConnectionChecker());
   sl.registerLazySingleton(() => http.Client());

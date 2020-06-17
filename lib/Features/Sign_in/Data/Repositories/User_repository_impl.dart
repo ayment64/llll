@@ -12,8 +12,10 @@ class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
   var response;
-  UserRepositoryImpl(
-      {@required this.remoteDataSource, @required this.networkInfo});
+  UserRepositoryImpl({
+    @required this.remoteDataSource,
+    @required this.networkInfo,
+  });
   @override
   Future<Either<Failure, String>> login(
       String username, String password) async {
@@ -22,7 +24,7 @@ class UserRepositoryImpl implements UserRepository {
       response = await remoteDataSource.login(username, password);
       if (response is String) {
         return Right(response);
-      }else {
+      } else {
         return Left(response);
       }
     } on ServerExeption {
@@ -32,11 +34,10 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<Failure, String>> register(Paramsre params) async {
-   try {
+    try {
       networkInfo.isConnected;
       response = await remoteDataSource.register(params);
-        return Right(response);
-
+      return Right(response);
     } on ServerExeption {
       return Left(ServerFailure());
     }

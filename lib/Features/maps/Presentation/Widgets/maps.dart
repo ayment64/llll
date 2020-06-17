@@ -22,7 +22,7 @@ class _MapsState extends State<Maps> {
   List<Marker> markers = [];
   List<Circle> circles = [];
   bool filled;
-  double km =2;
+  double km = 2;
   LatLng onlypoint;
   GoogleMapController controller;
   Completer<GoogleMapController> _controller = Completer();
@@ -32,11 +32,12 @@ class _MapsState extends State<Maps> {
     setState(() {
       this.controller = controller;
     });
-    if (widget.locations.length>0){
-    for (Location l in widget.locations) {
-      addmarkerinit(LatLng(double.parse(l.lat), double.parse(l.long)));
-      km = double.parse(l.km);
-    }}
+    if (widget.locations.length > 0) {
+      for (Location l in widget.locations) {
+        addmarkerinit(LatLng(double.parse(l.lat), double.parse(l.long)));
+        km = double.parse(l.km);
+      }
+    }
   }
 
   @override
@@ -65,8 +66,7 @@ class _MapsState extends State<Maps> {
           markers: Set.from(markers),
           circles: Set.from(circles),
         ),
-         
-        Padding(
+          Padding(
           padding: const EdgeInsets.all(40.0),
           child: Container(
             alignment: Alignment.bottomCenter,
@@ -110,7 +110,7 @@ class _MapsState extends State<Maps> {
                       },
                     ),
                   ),
-                  visible: onlypoint!=null,
+                  visible: onlypoint != null,
                 ),
               ],
             ),
@@ -162,7 +162,7 @@ class _MapsState extends State<Maps> {
     circles.add(Circle(
         circleId: CircleId(point.toString()),
         center: point,
-        radius: km*1000,
+        radius: km * 1000,
         fillColor: Color(0x3329ABE2),
         strokeColor: Color(0x4429ABE2),
         onTap: () {}));
@@ -181,14 +181,13 @@ class _MapsState extends State<Maps> {
   }
 
   void addlocation() {
-   
     Location location = Location(
         long: onlypoint.longitude.toString(),
         lat: onlypoint.latitude.toString(),
         city: null,
         km: "30",
         quant: null);
-         onlypoint = null;
+    onlypoint = null;
 
     BlocProvider.of<MapsBloc>(context).dispatch(SaveLocationEvent(
         location: LocationParams(location: location, token: token)));

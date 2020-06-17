@@ -142,32 +142,38 @@ class CategoryWidget extends StatelessWidget {
                                 )),
                               ),
                             ),
-                            Container(
-                              height: 150,
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Center(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    width: 60.0,
-                                    height: 60.0,
-                                    decoration: new BoxDecoration(
-                                      image: new DecorationImage(
-                                        image: new ExactAssetImage(
-                                            'Assets/images/category.png'),
-                                        fit: BoxFit.cover,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context, new ToAddCategory(token));
+                              },
+                              child: Container(
+                                height: 150,
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 60.0,
+                                      height: 60.0,
+                                      decoration: new BoxDecoration(
+                                        image: new DecorationImage(
+                                          image: new ExactAssetImage(
+                                              'Assets/images/category.png'),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    "Add Category",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              )),
+                                    Text(
+                                      "Add Category",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                )),
+                              ),
                             ),
                           ],
                         )),
