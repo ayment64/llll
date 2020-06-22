@@ -189,7 +189,7 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
                 onChanged: (bool newValue) {
                   setState(() {
                     checkBoxValue = newValue;
-                    if (!checkBoxValue) dispatchGotoChooseAssociation();
+                    if (checkBoxValue) dispatchGotoChooseAssociation();
                   });
                 })
           ],
