@@ -11,8 +11,9 @@ class ChooseSubcat extends AddCategoryState {
   final String token;
   final int id;
   final String catName;
+  final Location location;
 
-  ChooseSubcat({this.token, this.id, this.catName});
+  ChooseSubcat({this.token, this.id, this.catName, this.location});
 }
 
 class SubCatLoading extends AddCategoryState {}
@@ -27,14 +28,16 @@ class SubCatLoaded extends AddCategoryState {
   final String token;
   final int id;
   final String catName;
-
+  final Location location;
   final List<SubCategoryData> list;
 
-  SubCatLoaded(
-      {@required this.token,
-      @required this.id,
-      @required this.catName,
-      @required this.list});
+  SubCatLoaded({
+    @required this.token,
+    @required this.id,
+    @required this.catName,
+    @required this.list,
+    @required this.location,
+  });
 }
 
 class Error extends AddCategoryState {

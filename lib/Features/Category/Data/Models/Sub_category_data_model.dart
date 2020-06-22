@@ -1,4 +1,3 @@
-import 'package:llll/Features/Category/Domain/Entities/CategoryData.dart';
 import 'package:llll/Features/Category/Domain/Entities/SubCategoryData.dart';
 import 'package:meta/meta.dart';
 

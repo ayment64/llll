@@ -144,8 +144,8 @@ class CategoryWidget extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context, new ToAddCategory(token));
+                                Navigator.push(context,
+                                    new ToAssociateCategoryPage(token));
                               },
                               child: Container(
                                 height: 150,

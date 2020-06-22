@@ -4,12 +4,13 @@ import 'package:llll/Core/widgets/Loaded_widjet.dart';
 import 'package:llll/Features/Category/Presentation/Widgets/Add_category.dart';
 import 'package:llll/Features/Category/Presentation/Widgets/Add_sub_category.dart';
 import 'package:llll/Features/Category/Presentation/bloc/add_category_bloc.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 
 class Category extends StatefulWidget {
   final String token;
   final String from;
-
-  const Category({Key key, this.token, this.from}) : super(key: key);
+ final Location location;
+  const Category({Key key, this.token, this.from, this.location}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -41,6 +42,7 @@ class _CategoryState extends State<Category> {
           return LodaedWidgetDisplay();
         } else if (state is SubCatLoaded) {
           return AddSubCategory(
+            location: state.location,
             token: state.token,
             catName: state.catName,
             id: state.id,
@@ -53,6 +55,7 @@ class _CategoryState extends State<Category> {
 
         if (state is AddCategoryInitial)
           return AddCategory(
+            location: widget.location,
             token: token,
           );
       }),
@@ -66,6 +69,6 @@ class _CategoryState extends State<Category> {
 
   void dispatchInitListSubCatagorys() {
     BlocProvider.of<AddCategoryBloc>(context)
-        .dispatch(InitListSubCatagorys(token: token, id: id, catName: catName));
+        .dispatch(InitListSubCatagorys(token: token, id: id, catName: catName,location: widget.location));
   }
 }

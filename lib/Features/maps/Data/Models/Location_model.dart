@@ -7,8 +7,14 @@ class LocationModel extends Location {
       @required final km,
       @required final city,
       @required final lat,
+      @required final id,
+      @required final isActive,
+      @required final zipcode,
       @required final long})
       : super(
+          zipcode: zipcode,
+          id: id,
+          isActive: isActive,
           city: city,
           long: long,
           lat: lat,
@@ -16,8 +22,10 @@ class LocationModel extends Location {
           km: km,
         );
   factory LocationModel.fromJson(Map<String, dynamic> json) {
-    
     return LocationModel(
+      id: json['id'],
+      isActive: json["isActive"],
+      zipcode: json["zipCode"],
       city: json["city"],
       km: json["km"].toString(),
       lat: json["latitude"].toString(),

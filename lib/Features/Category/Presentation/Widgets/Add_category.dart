@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Core/Routing/Routing.dart';
 import 'package:llll/Core/widgets/Loaded_widjet.dart';
+import 'package:llll/Features/AssociateCategory/Domain/UseCaces/AssociatecatorSubCattolocation.dart';
 import 'package:llll/Features/Category/Domain/Entities/CategoryData.dart';
 import 'package:llll/Features/Category/Presentation/bloc/add_category_bloc.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 
 class AddCategory extends StatefulWidget {
   final String token;
+  final Location location;
   AddCategory({
+    @required this.location,
     Key key,
     @required this.token,
   }) : super(key: key);
@@ -27,10 +31,10 @@ class _AddCategoryState extends State<AddCategory> {
       child: Column(
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0),
+              padding: EdgeInsets.only(left: 20.0, top: 50.0),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context, new ToHome(token));
+                  Navigator.push(context, new ToAssociateCategoryPage(token));
                 },
                 child: new Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,6 +138,7 @@ class _AddCategoryState extends State<AddCategory> {
             child: Expanded(
               child: new ListView.builder(
                 itemBuilder: (_, int index) => CategoryItem(
+                  location: widget.location,
                   data: listOfCategorys[index],
                   token: token,
                 ),
@@ -154,8 +159,9 @@ class _AddCategoryState extends State<AddCategory> {
 
 class CategoryItem extends StatefulWidget {
   final CategoryData data;
+  final Location location;
   final String token;
-  CategoryItem({this.data, this.token});
+  CategoryItem({this.data, this.token, this.location});
 
   @override
   _CategoryItemState createState() => _CategoryItemState();
@@ -189,7 +195,10 @@ class _CategoryItemState extends State<CategoryItem> {
                 activeColor: Colors.green,
                 onChanged: (bool newValue) {
                   setState(() {
-                    checkBoxValue = newValue;
+                    if (!checkBoxValue) {
+                      checkBoxValue = newValue;
+                      dispatchGotoChooseAssociation();
+                    }
                   });
                 })
           ],
@@ -203,6 +212,20 @@ class _CategoryItemState extends State<CategoryItem> {
       token: widget.token,
       catName: widget.data.name,
       id: widget.data.id,
+      location: widget.location,
     ));
+  }
+
+  void dispatchGotoChooseAssociation() {
+    AssociatecatorSubCattolocationParams params =
+        AssociatecatorSubCattolocationParams(
+      active_cat: true,
+      catid: widget.data.id,
+      subcatid: null,
+      location_id: widget.location.id,
+      token: widget.token,
+    );
+    BlocProvider.of<AddCategoryBloc>(context)
+        .dispatch(AssociateCatOrSubcattolocationEvnet(params: params));
   }
 }

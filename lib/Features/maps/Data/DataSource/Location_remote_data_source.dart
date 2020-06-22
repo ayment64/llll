@@ -1,4 +1,3 @@
-import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 import 'package:llll/Features/maps/Domain/UseCaces/Add_location.dart';
 abstract class LocationRemaoteDataSourse {

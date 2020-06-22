@@ -3,6 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:llll/Core/Platform/Network_info.dart';
 import 'package:llll/Core/Presentation_logic/Utils/Input_checker.dart';
 import 'package:llll/Core/Presentation_logic/Utils/register_input_cheker.dart';
+import 'package:llll/Features/AssociateCategory/Data/DataSource/Associate_category_location_remaote_data_sourse.dart';
+import 'package:llll/Features/AssociateCategory/Domain/UseCaces/Activate_location.dart';
+import 'package:llll/Features/AssociateCategory/Domain/UseCaces/AssociatecatorSubCattolocation.dart';
+import 'package:llll/Features/AssociateCategory/Presentation/bloc/associate_category_bloc.dart';
 import 'package:llll/Features/Category/Data/DataSource/Category_remaote_data_sourse.dart';
 import 'package:llll/Features/Category/Data/DataSource/Implementation/Category_remaote_data_sourse_impl.dart';
 import 'package:llll/Features/Category/Domain/Repositories/Category_repository.dart';
@@ -18,6 +22,10 @@ import 'package:llll/Features/Sign_in/Presentation/bloc/login_bloc.dart';
 import 'package:llll/Features/maps/Data/DataSource/Implementations/Location_remote_data_source_impl.dart';
 import 'package:llll/Features/maps/Domain/Repositories/Location_repository.dart';
 import 'package:llll/Features/maps/Domain/UseCaces/Show_location.dart';
+import 'Features/AssociateCategory/Data/DataSource/implementation/Associate_category_location_remaote_data_sourse_impl.dart';
+import 'Features/AssociateCategory/Data/Repositories/Associate_category_location_repository_impl.dart';
+import 'Features/AssociateCategory/Domain/Repositories/Associate_category_location_repository.dart';
+import 'Features/AssociateCategory/Domain/UseCaces/Get_Category_location_partner.dart';
 import 'Features/Category/Data/Repositories/Category_repository_Impl.dart';
 import 'Features/Category/Domain/UseCaces/Init_list_category.dart';
 import 'Features/Profile_submitting/Data/DataSource/Implementations/Profile_remote_data_source_impl.dart';
@@ -76,6 +84,26 @@ void init() {
 
   sl.registerFactory(() => HomeBloc());
   //! ----------------------------------------------------------------------------------------------
+  //*-----------------------------------------  home  -----------------------------------------------------
+
+  sl.registerFactory(() =>
+      AssociateCategoryBloc(showLocation: sl(), initListCategoryPartner: sl(),activatelocation: sl()));
+  // ? Usescases
+  sl.registerLazySingleton(
+      () => InitListCategoryPartner(categoryRepositor: sl()));
+      sl.registerLazySingleton(
+      () => Activatelocation(categoryRepositor: sl()));
+      sl.registerLazySingleton(
+      () => AssociatecatorSubCattolocation(categoryRepositor: sl()));
+  // ? Repositories
+  sl.registerLazySingleton<AssociateCategoryLocationRepository>(() =>
+      AssociateCategoryLocationRepositoryImpl(
+          networkInfo: sl(), remoteDataSource: sl()));
+  // ? Data source
+  sl.registerLazySingleton<AssociateCategoryLocationRemaoteDataSourse>(
+      () => AssociateCategoryLocationRemaoteDataSourseImpl(client: sl()));
+  //! ----------------------------------------------------------------------------------------------
+
   //*-----------------------------------------  maps  -----------------------------------------------------
   sl.registerFactory(() => MapsBloc(addLocation: sl(), showLocation: sl()));
   // ? Usescases
@@ -91,7 +119,7 @@ void init() {
   //* --------------------------------------- Category ----------------------------------------------------
   // ? Bloc
   sl.registerFactory(
-      () => AddCategoryBloc(initListCategory: sl(), initListSubCategory: sl()));
+      () => AddCategoryBloc(initListCategory: sl(), initListSubCategory: sl(),associatecatorSubCattolocation: sl()));
   // ? Use cases
   sl.registerLazySingleton(() => InitListCategory(categoryRepositor: sl()));
   sl.registerLazySingleton(() => InitListSubCategory(categoryRepositor: sl()));

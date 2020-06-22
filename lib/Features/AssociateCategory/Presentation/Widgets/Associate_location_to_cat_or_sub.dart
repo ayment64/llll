@@ -1,42 +1,37 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Core/Routing/Routing.dart';
-import 'package:llll/Features/AssociateCategory/Domain/UseCaces/AssociatecatorSubCattolocation.dart';
-import 'package:llll/Features/Category/Domain/Entities/SubCategoryData.dart';
-import 'package:llll/Features/Category/Presentation/bloc/add_category_bloc.dart';
+import 'package:llll/Features/Category/Domain/Entities/CategoryData.dart';
 import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 
-class AddSubCategory extends StatefulWidget {
+class AssociateLocationToCatOrSub extends StatefulWidget {
   final String token;
   final Location location;
-  final int id;
-  final String catName;
-  final List<SubCategoryData> listOfCategorys;
-
-  AddSubCategory({
-    Key key,
-    @required this.token,
-    this.id,
-    this.catName,
-    this.listOfCategorys,
-    this.location,
-  }) : super(key: key);
+  final List<CategoryData> list;
+  AssociateLocationToCatOrSub(
+      {Key key,
+      @required this.token,
+      @required this.list,
+      @required this.location})
+      : super(key: key);
 
   @override
-  _AddSubCategoryState createState() => _AddSubCategoryState();
+  _AssociateLocationToCatOrSubState createState() =>
+      _AssociateLocationToCatOrSubState();
 }
 
-class _AddSubCategoryState extends State<AddSubCategory> {
+class _AssociateLocationToCatOrSubState
+    extends State<AssociateLocationToCatOrSub> {
   String token;
-  bool visload = true;
+  String searchValue;
   Location location;
-  List<SubCategoryData> listOfCategorys = new List();
+  bool visload = true;
+  List<CategoryData> listOfCategorys = new List();
   @override
   Widget build(BuildContext context) {
     location = widget.location;
+    listOfCategorys = widget.list;
     token = widget.token;
-    listOfCategorys = widget.listOfCategorys;
-    print(location.toString());
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -44,8 +39,7 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               padding: EdgeInsets.only(left: 20.0, top: 20.0),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context, new ToAddCategory(token, widget.location));
+                  Navigator.push(context, new ToHome(token));
                 },
                 child: new Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +63,7 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               )),
           Container(
             child: new Container(
-              height: 260.0,
+              height: 200.0,
               color: Colors.white,
               child: new Column(
                 children: <Widget>[
@@ -111,7 +105,6 @@ class _AddSubCategoryState extends State<AddSubCategory> {
                     ]),
                   ),
                   Container(
-                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Center(
@@ -127,19 +120,89 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               ),
             ),
           ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: new Text(
-                'Choose Sub category of ' + widget.catName,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+            child: new TextFormField(
+              initialValue: "",
+              onChanged: (value) {
+                searchValue = value;
+              },
+              style: TextStyle(color: Colors.black, fontFamily: 'SFUIDisplay'),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Search',
+                  suffixIcon: Icon(Icons.search),
+                  labelStyle: TextStyle(fontSize: 15)),
             ),
+          ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 2.8,
+                  child: new AutoSizeText(
+                    "City/Country",
+                    style: TextStyle(
+                        color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 2.8,
+                  child: new AutoSizeText(
+                    "Zip Code",
+                    style: TextStyle(
+                        color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 2.8,
+                  child: new AutoSizeText(
+                    location.city + " " + location.quant,
+                    style: TextStyle(
+                        color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 2.8,
+                  child: new AutoSizeText(
+                    location.zipcode,
+                    style: TextStyle(
+                        color: Colors.black, fontFamily: 'SFUIDisplay'),
+                  ),
+                ),
+              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.green,
+                    size: 36.0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context, new ToAddCategory(token,widget.location));
+                  })
+            ],
           ),
           Expanded(
             child: new ListView.builder(
-              itemBuilder: (_, int index) => SubCategoryItem(
-                location: widget.location,
+              itemBuilder: (_, int index) => CategoryItem(
                 data: listOfCategorys[index],
                 token: token,
               ),
@@ -152,20 +215,24 @@ class _AddSubCategoryState extends State<AddSubCategory> {
   }
 }
 
-class SubCategoryItem extends StatefulWidget {
-  final SubCategoryData data;
-  final Location location;
+class CategoryItem extends StatefulWidget {
+  final CategoryData data;
   final String token;
-  SubCategoryItem({this.data, this.token, this.location});
+  CategoryItem({this.data, this.token});
 
   @override
-  _SubCategoryItemState createState() => _SubCategoryItemState();
+  _CategoryItemState createState() => _CategoryItemState();
 }
 
-class _SubCategoryItemState extends State<SubCategoryItem> {
-  bool checkBoxValue = false;
+class _CategoryItemState extends State<CategoryItem> {
+  bool checkBoxValue = true;
+  String dataname = "no items available";
+
   @override
   Widget build(BuildContext context) {
+    if(widget.data.name!=null)
+    dataname = widget.data.name;
+    
     return new Card(
       elevation: 1.0,
       child: new Container(
@@ -178,7 +245,7 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
                   child: Container(
                     width: MediaQuery.of(context).size.width - 80,
                     child: new Text(
-                      widget.data.name,
+                     dataname,
                       style: TextStyle(fontSize: 14.0),
                     ),
                   )),
@@ -189,25 +256,11 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
                 onChanged: (bool newValue) {
                   setState(() {
                     checkBoxValue = newValue;
-                    if (!checkBoxValue) dispatchGotoChooseAssociation();
                   });
                 })
           ],
         ),
       ),
     );
-  }
-
-  void dispatchGotoChooseAssociation() {
-    AssociatecatorSubCattolocationParams params =
-        AssociatecatorSubCattolocationParams(
-      active_cat: true,
-      catid: null,
-      subcatid: widget.data.id,
-      location_id: widget.location.id,
-      token: widget.token,
-    );
-    BlocProvider.of<AddCategoryBloc>(context)
-        .dispatch(AssociateCatOrSubcattolocationEvnet(params: params));
   }
 }

@@ -1,42 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Core/Routing/Routing.dart';
-import 'package:llll/Features/AssociateCategory/Domain/UseCaces/AssociatecatorSubCattolocation.dart';
-import 'package:llll/Features/Category/Domain/Entities/SubCategoryData.dart';
-import 'package:llll/Features/Category/Presentation/bloc/add_category_bloc.dart';
+import 'package:llll/Core/widgets/Loaded_widjet.dart';
+import 'package:llll/Features/AssociateCategory/Domain/UseCaces/Activate_location.dart';
+import 'package:llll/Features/AssociateCategory/Presentation/bloc/associate_category_bloc.dart';
 import 'package:llll/Features/maps/Domain/Entities/Location.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
-class AddSubCategory extends StatefulWidget {
+class ShowPlacesList extends StatefulWidget {
   final String token;
-  final Location location;
-  final int id;
-  final String catName;
-  final List<SubCategoryData> listOfCategorys;
-
-  AddSubCategory({
+  ShowPlacesList({
     Key key,
     @required this.token,
-    this.id,
-    this.catName,
-    this.listOfCategorys,
-    this.location,
   }) : super(key: key);
 
   @override
-  _AddSubCategoryState createState() => _AddSubCategoryState();
+  _ShowPlacesListState createState() => _ShowPlacesListState();
 }
 
-class _AddSubCategoryState extends State<AddSubCategory> {
+class _ShowPlacesListState extends State<ShowPlacesList> {
   String token;
+  String searchValue;
+  Location selectedValue;
   bool visload = true;
-  Location location;
-  List<SubCategoryData> listOfCategorys = new List();
+  List<Location> listOfCategorys = new List();
   @override
   Widget build(BuildContext context) {
-    location = widget.location;
     token = widget.token;
-    listOfCategorys = widget.listOfCategorys;
-    print(location.toString());
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -44,8 +34,7 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               padding: EdgeInsets.only(left: 20.0, top: 20.0),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context, new ToAddCategory(token, widget.location));
+                  Navigator.push(context, new ToHome(token));
                 },
                 child: new Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +58,7 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               )),
           Container(
             child: new Container(
-              height: 260.0,
+              height: 200.0,
               color: Colors.white,
               child: new Column(
                 children: <Widget>[
@@ -111,7 +100,6 @@ class _AddSubCategoryState extends State<AddSubCategory> {
                     ]),
                   ),
                   Container(
-                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Center(
@@ -127,23 +115,52 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               ),
             ),
           ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: new Text(
-                'Choose Sub category of ' + widget.catName,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-            ),
+          Padding(
+              padding:
+                  const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+              child: SearchableDropdown(
+                items: listOfCategorys.map((item) {
+                  return new DropdownMenuItem<Location>(
+                      child: Text(item.city + ", " + item.quant), value: item);
+                }).toList(),
+                value: selectedValue,
+                isExpanded: true,
+                isCaseSensitiveSearch: true,
+                searchHint: new Text(
+                  'Select ',
+                  style: new TextStyle(fontSize: 20),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value;
+                    print(selectedValue);
+                  });
+                },
+              )),
+          Visibility(
+            child: LodaedWidgetDisplay(),
+            visible: visload,
           ),
-          Expanded(
-            child: new ListView.builder(
-              itemBuilder: (_, int index) => SubCategoryItem(
-                location: widget.location,
-                data: listOfCategorys[index],
-                token: token,
+          BlocListener<AssociateCategoryBloc, AssociateCategoryState>(
+            listener: (context, state) {
+              if (state is Loaded) {
+                listOfCategorys = state.list;
+                visload = false;
+              }
+              if (state is Loadingg) {
+                setState(() {
+                  visload = true;
+                });
+              }
+            },
+            child: Expanded(
+              child: new ListView.builder(
+                itemBuilder: (_, int index) => LocationItem(
+                  data: listOfCategorys[index],
+                  token: token,
+                ),
+                itemCount: this.listOfCategorys.length,
               ),
-              itemCount: this.listOfCategorys.length,
             ),
           ),
         ],
@@ -152,33 +169,40 @@ class _AddSubCategoryState extends State<AddSubCategory> {
   }
 }
 
-class SubCategoryItem extends StatefulWidget {
-  final SubCategoryData data;
-  final Location location;
+class LocationItem extends StatefulWidget {
+  final Location data;
   final String token;
-  SubCategoryItem({this.data, this.token, this.location});
+  LocationItem({this.data, this.token});
 
   @override
-  _SubCategoryItemState createState() => _SubCategoryItemState();
+  _LocationItemState createState() => _LocationItemState();
 }
 
-class _SubCategoryItemState extends State<SubCategoryItem> {
-  bool checkBoxValue = false;
+class _LocationItemState extends State<LocationItem> {
+  bool checkBoxValue;
+  bool initiated = false;
   @override
   Widget build(BuildContext context) {
+    if (!initiated) {
+      checkBoxValue = widget.data.isActive == 1;
+      initiated = true;
+    }
+
     return new Card(
       elevation: 1.0,
       child: new Container(
         child: new Row(
           children: <Widget>[
             InkWell(
-              onTap: () {},
+              onTap: () {
+                dispatchInitListCatagorys();
+              },
               child: new Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child: Container(
                     width: MediaQuery.of(context).size.width - 80,
                     child: new Text(
-                      widget.data.name,
+                      widget.data.city + " " + widget.data.quant,
                       style: TextStyle(fontSize: 14.0),
                     ),
                   )),
@@ -189,7 +213,7 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
                 onChanged: (bool newValue) {
                   setState(() {
                     checkBoxValue = newValue;
-                    if (!checkBoxValue) dispatchGotoChooseAssociation();
+                    dispatchActivateLocation();
                   });
                 })
           ],
@@ -198,16 +222,16 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
     );
   }
 
-  void dispatchGotoChooseAssociation() {
-    AssociatecatorSubCattolocationParams params =
-        AssociatecatorSubCattolocationParams(
-      active_cat: true,
-      catid: null,
-      subcatid: widget.data.id,
-      location_id: widget.location.id,
-      token: widget.token,
-    );
-    BlocProvider.of<AddCategoryBloc>(context)
-        .dispatch(AssociateCatOrSubcattolocationEvnet(params: params));
+  void dispatchInitListCatagorys() {
+    BlocProvider.of<AssociateCategoryBloc>(context).dispatch(
+        GotoAssociateLocationToCatOrSub(
+            token: widget.token, location: widget.data));
+  }
+
+  void dispatchActivateLocation() {
+    ActivatelocationParams params =
+        ActivatelocationParams(widget.token, widget.data.id, checkBoxValue);
+    BlocProvider.of<AssociateCategoryBloc>(context)
+        .dispatch(ActivatelocationEvent(params: params));
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,7 +21,6 @@ class _MapsBlancState extends State<MapsBlanc> {
   double km = 1;
   LatLng onlypoint;
   GoogleMapController controller;
-  Completer<GoogleMapController> _controller = Completer();
   String token;
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
@@ -145,6 +143,9 @@ class _MapsBlancState extends State<MapsBlanc> {
 
   void addlocation() {
     Location location = Location(
+        id: null,
+        isActive: null,
+        zipcode: null,
         long: onlypoint.longitude.toString(),
         lat: onlypoint.latitude.toString(),
         city: null,

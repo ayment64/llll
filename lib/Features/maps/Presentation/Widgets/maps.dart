@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,7 +24,6 @@ class _MapsState extends State<Maps> {
   double km = 2;
   LatLng onlypoint;
   GoogleMapController controller;
-  Completer<GoogleMapController> _controller = Completer();
 
   String token;
   void _onMapCreated(GoogleMapController controller) {
@@ -66,7 +64,7 @@ class _MapsState extends State<Maps> {
           markers: Set.from(markers),
           circles: Set.from(circles),
         ),
-          Padding(
+        Padding(
           padding: const EdgeInsets.all(40.0),
           child: Container(
             alignment: Alignment.bottomCenter,
@@ -182,6 +180,9 @@ class _MapsState extends State<Maps> {
 
   void addlocation() {
     Location location = Location(
+        id: null,
+        isActive: null,
+        zipcode: null,
         long: onlypoint.longitude.toString(),
         lat: onlypoint.latitude.toString(),
         city: null,
