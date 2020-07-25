@@ -274,7 +274,9 @@ class _MyTeamItemState extends State<MyTeamItem> {
                 },
               )),
           InkWell(
-            onTap: dispatchEventGotoPartnerProfile(widget.profile),
+            onTap: () {
+              dispatchEventGotoPartnerProfile(widget.profile);
+            },
             child: Card(
               elevation: 2.0,
               child: Row(

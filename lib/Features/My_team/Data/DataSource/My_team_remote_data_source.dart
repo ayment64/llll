@@ -28,4 +28,5 @@ abstract class MyTeamRemoteDataSource {
   //?/Post request
   ///throws[ServerExeptions]for all error codes.
   Future<String> sendInvite(SendInviteParams params);
+  
 }

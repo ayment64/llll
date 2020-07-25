@@ -4,6 +4,8 @@ import 'package:llll/Core/Error/Exeptions.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/SendInvite.dart';
 import 'package:llll/Features/Profile_submitting/Data/Models/Profile_model.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
+import 'package:llll/Features/maps/Data/Models/Location_model.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 import 'package:meta/meta.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
 import 'package:http/http.dart' as http;
@@ -65,7 +67,8 @@ class MyTeamRemoteDataSourceImpl implements MyTeamRemoteDataSource {
     List<Profile> myteam = List();
     for (Map d in jsonarray) {
       print("______________________________________________");
-      print(ProfileModel.fromMyTeamJson(d).companyName);
+
+      print(d['provision']);
       print("_____________________________________________");
       myteam.add(ProfileModel.fromMyTeamJson(d));
     }
@@ -90,5 +93,27 @@ class MyTeamRemoteDataSourceImpl implements MyTeamRemoteDataSource {
     } else {
       throw ServerExeption();
     }
+  }
+  @override
+  Future<List<Location>> showLocations(String token,int id) async {
+    var jsonresponse;
+    final response =
+        await http.get("http://dev.aroundorder.com/api/user/getTeamlocation",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $token',
+            },body:
+            );
+    jsonresponse = json.decode(response.body);
+    print(jsonresponse);
+    List<dynamic> jsonarray=jsonresponse["places"];
+    print(jsonarray);
+    List<Location> locationList=[];
+    for(Map d in jsonarray)
+    {
+      print(LocationModel.fromJson(d).toString());
+      locationList.add(LocationModel.fromJson(d));
+    }
+    return locationList;
   }
 }

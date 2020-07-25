@@ -17,6 +17,7 @@ class Profile {
   final String zipCode;
   final String city;
   final String country;
+  final String provision;
 
   Profile({
     @required this.firstname,
@@ -35,6 +36,7 @@ class Profile {
     @required this.zipCode,
     @required this.city,
     @required this.country,
+    @required this.provision
   });
   Map<String, dynamic> toJson() => {
         "firstname": firstname,

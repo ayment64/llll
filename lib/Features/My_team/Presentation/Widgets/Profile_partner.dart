@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:llll/Core/Routing/Routing.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 
+import 'Details_Widget.dart';
+
 class PartnerProfile extends StatefulWidget {
   final Profile selected_partner;
   final String token;
@@ -14,9 +16,42 @@ class PartnerProfile extends StatefulWidget {
 
 class _PartnerProfileState extends State<PartnerProfile> {
   String token;
+  Profile selectedProfile;
+  String adress;
+  String mobile;
+  String phone;
+  String website;
+  String provision;
+  bool details = true;
+  bool locations = false;
+  bool documents = false;
+
   @override
   Widget build(BuildContext context) {
     token = widget.token;
+    selectedProfile = widget.selected_partner;
+    print(selectedProfile.provision);
+    if (selectedProfile.provision == null)
+      provision = "0";
+    else
+      provision = selectedProfile.provision;
+    if (selectedProfile.adress == null)
+      adress = "Not Available";
+    else
+      adress = selectedProfile.adress;
+    if (selectedProfile.phoneNumber == null)
+      phone = "Not Available";
+    else
+      phone = selectedProfile.phoneNumber;
+    if (selectedProfile.mobileNumber == null)
+      mobile = "Not Available";
+    else
+      mobile = selectedProfile.mobileNumber;
+    if (selectedProfile.caompanyWebsite == null)
+      website = "Not Available";
+    else
+      website = selectedProfile.caompanyWebsite;
+
     return Container(
       child: Column(
         children: <Widget>[
@@ -24,7 +59,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
               padding: EdgeInsets.only(left: 20.0, top: 50.0),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context, new ToAssociateCategoryPage(token));
+                  Navigator.push(context, new ToMyTeam(token));
                 },
                 child: new Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +71,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 25.0),
-                      child: new Text('Categories',
+                      child: new Text(selectedProfile.companyName,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -105,47 +140,52 @@ class _PartnerProfileState extends State<PartnerProfile> {
               ),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    details = true;
+                    locations = false;
+                    documents = false;
+                  });
+                },
+                child: Text("Details"),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    details = false;
+                    locations = true;
+                    documents = false;
+                  });
+                },
+                child: Text("Locations"),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    details = false;
+                    locations = false;
+                    documents = true;
+                  });
+                },
+                child: Text("Documents"),
+              ),
+            ],
+          ),
+          Visibility(
+            visible: details,
+            child: Details_Widget(
+                selectedProfile: selectedProfile,
+                adress: adress,
+                provision: provision,
+                phone: phone,
+                mobile: mobile,
+                website: website),
+          )
         ],
-      ),
-    );
-  }
-}
-
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
-}
-
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'CAR', icon: Icons.directions_car),
-  const Choice(title: 'BICYCLE', icon: Icons.directions_bike),
-  const Choice(title: 'BOAT', icon: Icons.directions_boat),
-  const Choice(title: 'BUS', icon: Icons.directions_bus),
-  const Choice(title: 'TRAIN', icon: Icons.directions_railway),
-  const Choice(title: 'WALK', icon: Icons.directions_walk),
-];
-
-class ChoiceCard extends StatelessWidget {
-  const ChoiceCard({Key key, this.choice}) : super(key: key);
-
-  final Choice choice;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle textStyle = Theme.of(context).textTheme.headline4;
-    return Card(
-      color: Colors.white,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Icon(choice.icon, size: 128.0, color: textStyle.color),
-            Text(choice.title, style: textStyle),
-          ],
-        ),
       ),
     );
   }

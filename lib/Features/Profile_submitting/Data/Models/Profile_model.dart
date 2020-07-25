@@ -18,6 +18,7 @@ class ProfileModel extends Profile {
       @required final String state,
       @required final String zipCode,
       @required final String city,
+      @required final String provision,
       @required final String country})
       : super(
           firstname: firstname,
@@ -36,6 +37,7 @@ class ProfileModel extends Profile {
           zipCode: zipCode,
           city: city,
           country: country,
+          provision: provision,
         );
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -55,6 +57,7 @@ class ProfileModel extends Profile {
         state: json['Partner']["state"], //zipCode
         zipCode: json['Partner']["zipCode"],
         city: json['Partner']["city"],
+        provision: json['Partner']["provision"],
         country: json['Partner']["country"]);
   }
   factory ProfileModel.fromFindUserJson(Map<String, dynamic> json) {
@@ -74,6 +77,7 @@ class ProfileModel extends Profile {
         state: json['Company']["state"], //zipCode
         zipCode: json['Company']["zipCode"],
         city: json['Company']["city"],
+        provision: json['Company']["provison"],
         country: json['Company']["country"]);
   }
   factory ProfileModel.fromMyTeamJson(Map<String, dynamic> json) {
@@ -89,10 +93,11 @@ class ProfileModel extends Profile {
         faxNumber: json['ofPartner']["fax"],
         adress: json['ofPartner']["address"],
         street: json['ofPartner']["street"],
-        streetNumber: json['ofPartner']["streetNumber"], //state
-        state: json['ofPartner']["state"], //zipCode
+        streetNumber: json['ofPartner']["streetNumber"],
+        state: json['ofPartner']["state"],
         zipCode: json['ofPartner']["zipCode"],
         city: json['ofPartner']["city"],
+        provision: json["provision"],
         country: json['ofPartner']["country"]);
   }
 }
