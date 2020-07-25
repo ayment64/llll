@@ -12,6 +12,13 @@ import 'package:llll/Features/Category/Data/DataSource/Implementation/Category_r
 import 'package:llll/Features/Category/Domain/Repositories/Category_repository.dart';
 import 'package:llll/Features/Category/Domain/UseCaces/Init_list_sub_category.dart';
 import 'package:llll/Features/Category/Presentation/bloc/add_category_bloc.dart';
+import 'package:llll/Features/My_team/Data/DataSource/Implementations/My_team_remote_data_source_impl.dart';
+import 'package:llll/Features/My_team/Data/DataSource/My_team_remote_data_source.dart';
+import 'package:llll/Features/My_team/Data/Repositories/My_team_repositories_impl.dart';
+import 'package:llll/Features/My_team/Domain/Repositories/My_team_repository.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/FindUser.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
+import 'package:llll/Features/My_team/Presentation/bloc/my_team_bloc.dart';
 import 'package:llll/Features/Profile_submitting/Data/Repositories/Profile_repository_impl.dart';
 import 'package:llll/Features/Profile_submitting/Domain/UseCaces/Show_profile.dart';
 import 'package:llll/Features/Profile_submitting/Presentation/bloc/profile_submitting_bloc.dart';
@@ -86,14 +93,15 @@ void init() {
   //! ----------------------------------------------------------------------------------------------
   //*-----------------------------------------  home  -----------------------------------------------------
 
-  sl.registerFactory(() =>
-      AssociateCategoryBloc(showLocation: sl(), initListCategoryPartner: sl(),activatelocation: sl()));
+  sl.registerFactory(() => AssociateCategoryBloc(
+      showLocation: sl(),
+      initListCategoryPartner: sl(),
+      activatelocation: sl()));
   // ? Usescases
   sl.registerLazySingleton(
       () => InitListCategoryPartner(categoryRepositor: sl()));
-      sl.registerLazySingleton(
-      () => Activatelocation(categoryRepositor: sl()));
-      sl.registerLazySingleton(
+  sl.registerLazySingleton(() => Activatelocation(categoryRepositor: sl()));
+  sl.registerLazySingleton(
       () => AssociatecatorSubCattolocation(categoryRepositor: sl()));
   // ? Repositories
   sl.registerLazySingleton<AssociateCategoryLocationRepository>(() =>
@@ -118,8 +126,10 @@ void init() {
   //! ----------------------------------------------------------------------------------------------
   //* --------------------------------------- Category ----------------------------------------------------
   // ? Bloc
-  sl.registerFactory(
-      () => AddCategoryBloc(initListCategory: sl(), initListSubCategory: sl(),associatecatorSubCattolocation: sl()));
+  sl.registerFactory(() => AddCategoryBloc(
+      initListCategory: sl(),
+      initListSubCategory: sl(),
+      associatecatorSubCattolocation: sl()));
   // ? Use cases
   sl.registerLazySingleton(() => InitListCategory(categoryRepositor: sl()));
   sl.registerLazySingleton(() => InitListSubCategory(categoryRepositor: sl()));
@@ -130,9 +140,23 @@ void init() {
   // ? Data sources
   sl.registerLazySingleton<CategoryRemaoteDataSourse>(
       () => CategoryRemaoteDataSourseimpl(client: sl()));
+  //! ----------------------------------------------------------------------------------------------
+  //* --------------------------------------- Category ----------------------------------------------------
+  // ? Bloc
+  sl.registerFactory(() => MyTeamBloc(findUser: sl(), getTeam: sl()));
+  sl.registerLazySingleton(() => FindUser(categoryRepositor: sl()));
+  sl.registerLazySingleton(() => GetTeam(categoryRepositor: sl()));
+  // ? Repository
+  sl.registerLazySingleton<MyTeamRepository>(() => MyTeamRepositoryImpl(
+        remoteDataSource: sl(),
+        networkInfo: sl(),
+      ));
+  // ? Data sources
+  sl.registerLazySingleton<MyTeamRemoteDataSource>(
+      () => MyTeamRemoteDataSourceImpl(client: sl()));
 
   //! ----------------------------------------------------------------------------------------------
-  //! ----------------------------------------------------------------------------------------------
+  //! ---------------------------------------------------getTeamParams-------------------------------------------
   //! ----------------------------------------------------------------------------------------------
   //*-----------------------------------------  core  -----------------------------------------------------
   sl.registerLazySingleton(() => InputChecker());

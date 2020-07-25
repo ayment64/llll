@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:llll/Features/AssociateCategory/Presentation/Pages/Associate_category_page.dart';
 import 'package:llll/Features/Category/Presentation/Pages/Category_page.dart';
+import 'package:llll/Features/My_team/Presentation/Pages/My_team_page.dart';
 import 'package:llll/Features/Profile_submitting/Presentation/Pages/ProfileEditingPage.dart';
 import 'package:llll/Features/Sign_in/Presentation/Pages/signin.dart';
 import 'package:llll/Features/home/Presentation/Pages/Home_page.dart';
@@ -16,14 +17,22 @@ class ToHome extends MaterialPageRoute<Null> {
         });
 }
 
-class ToAddCategory extends MaterialPageRoute<Null> {
-  ToAddCategory(String token,Location location)
+class ToMyTeam extends MaterialPageRoute<Null> {
+  ToMyTeam(String token)
       : super(builder: (BuildContext ctx) {
-          return new CategoryPage(
-            token: token,location: location
+          return new MyTeamPage(
+            token: token,
           );
         });
 }
+
+class ToAddCategory extends MaterialPageRoute<Null> {
+  ToAddCategory(String token, Location location)
+      : super(builder: (BuildContext ctx) {
+          return new CategoryPage(token: token, location: location);
+        });
+}
+
 class ToAssociateCategoryPage extends MaterialPageRoute<Null> {
   ToAssociateCategoryPage(String token)
       : super(builder: (BuildContext ctx) {

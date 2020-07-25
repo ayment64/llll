@@ -55,4 +55,8 @@ class Profile {
         "long": 0,
         "lat": 0
       };
+  @override
+  String toString() {
+    return "[" + this.companyName + "]";
+  }
 }

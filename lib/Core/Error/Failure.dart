@@ -29,3 +29,5 @@ class DoubleFailureUE extends Failure {}
 class DoubleFailureEP extends Failure {}
 
 class PassswordConfiramtionError extends Failure {}
+
+class NoSuchUserFailure extends Failure {}

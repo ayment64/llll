@@ -337,7 +337,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                             InkWell(
                               onTap: () {
-                                Navigator.push(context, new ToLogin());
+                                Navigator.push(
+                                    context, new ToMyTeam(widget.token));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -372,7 +373,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             )),
                                       ),
                                       Text(
-                                        "Log out",
+                                        "My team",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       )
@@ -383,6 +384,47 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ],
                         )),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context, new ToLogin());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 150,
+                          width: MediaQuery.of(context).size.width / 2.3,
+                          decoration: BoxDecoration(
+                              border: Border(
+                            left: BorderSide(color: Color(0x66333333)),
+                            bottom: BorderSide(color: Color(0x66333333)),
+                          )),
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Container(
+                                    width: 60.0,
+                                    height: 60.0,
+                                    decoration: new BoxDecoration(
+                                      image: new DecorationImage(
+                                        image: new ExactAssetImage(
+                                            'Assets/images/logoutpng.png'),
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    )),
+                              ),
+                              Text(
+                                "Log out",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

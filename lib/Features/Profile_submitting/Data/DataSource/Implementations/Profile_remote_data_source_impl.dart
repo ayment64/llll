@@ -12,7 +12,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemaoteDataSourse {
   final http.Client client;
 
   ProfileRemoteDataSourceImpl({@required this.client});
-  @override
+
   @override
   Future<Profile> showEdite(String token) async {
     print("________________________________________________");
