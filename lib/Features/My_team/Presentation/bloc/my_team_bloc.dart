@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -12,8 +14,11 @@ part 'my_team_state.dart';
 class MyTeamBloc extends Bloc<MyTeamEvent, MyTeamState> {
   final FindUser findUser;
   final GetTeam getTeam;
-
-  MyTeamBloc({@required this.findUser, @required this.getTeam});
+  final GetPartnerLocations getPartnerLocations;
+  MyTeamBloc(
+      {@required this.findUser,
+      @required this.getTeam,
+      @required this.getPartnerLocations});
   @override
   MyTeamState get initialState => MyTeamInitial();
 
@@ -42,6 +47,15 @@ class MyTeamBloc extends Bloc<MyTeamEvent, MyTeamState> {
     if (event is GoToSelectedPartnerProfile) {
       yield WentToSelectedPartnerProfile(
           selected_partner: event.selected_partner);
+    }
+    if (event is GettPartnerLocations) {
+      yield GettingPartnerLocations();
+      var failureorLocations = await getPartnerLocations(event.params);
+      yield* failureorLocations.fold((failure) async* {
+        print("failure nikomek");
+      }, (locations) async* {
+        yield GotPartnerLocations(locations: locations);
+      });
     }
   }
 }

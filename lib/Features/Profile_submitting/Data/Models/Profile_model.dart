@@ -18,9 +18,11 @@ class ProfileModel extends Profile {
       @required final String state,
       @required final String zipCode,
       @required final String city,
+      @required final int id,
       @required final String provision,
       @required final String country})
       : super(
+          id: id,
           firstname: firstname,
           lastname: lastname,
           email: email,
@@ -42,6 +44,7 @@ class ProfileModel extends Profile {
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
+        id: json['Partner']["id"],
         firstname: json['Partner']["user"]["firstname"],
         lastname: json['Partner']["user"]["lastname"],
         email: json['Partner']["user"]["email"],
@@ -62,6 +65,7 @@ class ProfileModel extends Profile {
   }
   factory ProfileModel.fromFindUserJson(Map<String, dynamic> json) {
     return ProfileModel(
+        id: json["Company"]["id"],
         firstname: json['Company']["user"]["firstname"],
         lastname: json['Company']["user"]["lastname"],
         email: json['Company']["user"]["email"],
@@ -82,6 +86,7 @@ class ProfileModel extends Profile {
   }
   factory ProfileModel.fromMyTeamJson(Map<String, dynamic> json) {
     return ProfileModel(
+        id: json['ofPartner']["id"],
         firstname: json['ofPartner']["user"]["firstname"],
         lastname: json['ofPartner']["user"]["lastname"],
         email: json['ofPartner']["user"]["email"],

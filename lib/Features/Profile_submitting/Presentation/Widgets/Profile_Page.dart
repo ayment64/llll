@@ -796,6 +796,7 @@ class MapScreenState extends State<ProfilePage>
 
   void dispatchGetProfile() {
     profileEditData = Profile(
+        id: null,
         firstname: firstname,
         provision: null,
         lastname: lastname,

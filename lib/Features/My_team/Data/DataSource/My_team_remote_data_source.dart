@@ -1,7 +1,9 @@
 import 'package:llll/Features/My_team/Domain/UseCaces/FindUser.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/SendInvite.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 
 abstract class MyTeamRemoteDataSource {
   ///calls the http://dev.aroundorder.com/api/user/findUser
@@ -28,5 +30,10 @@ abstract class MyTeamRemoteDataSource {
   //?/Post request
   ///throws[ServerExeptions]for all error codes.
   Future<String> sendInvite(SendInviteParams params);
+  
+  ///calls the http://dev.aroundorder.com/api/user/getTeamlocation
+  //?/Post request
+  ///throws[ServerExeptions]for all error codes.
+  Future<List<Location>> getPartnerLocations(GetPartnerLocationParams params);
   
 }

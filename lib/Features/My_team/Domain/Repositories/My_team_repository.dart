@@ -4,8 +4,10 @@ import 'package:llll/Features/My_team/Domain/UseCaces/FindUser.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetPartnerDocuments.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetPartnerProfile.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/SendInvite.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 
 abstract class MyTeamRepository {
   Future<Either<Failure, Profile>> findUser(FindUserParams params);
@@ -15,4 +17,6 @@ abstract class MyTeamRepository {
       GetPartnerProfileParams params);
   Future<Either<Failure, Profile>> getPartnerDocuments(
       GetPartnerDocumentsParams params);
+  Future<Either<Failure, List<Location>>> getPartnerLocations(
+      GetPartnerLocationParams params);
 }

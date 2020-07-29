@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:llll/Core/Error/Exeptions.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/SendInvite.dart';
 import 'package:llll/Features/Profile_submitting/Data/Models/Profile_model.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
@@ -94,23 +95,27 @@ class MyTeamRemoteDataSourceImpl implements MyTeamRemoteDataSource {
       throw ServerExeption();
     }
   }
+
   @override
-  Future<List<Location>> showLocations(String token,int id) async {
+  Future<List<Location>> getPartnerLocations(
+      GetPartnerLocationParams params) async {
     var jsonresponse;
+    String token = params.token;
     final response =
-        await http.get("http://dev.aroundorder.com/api/user/getTeamlocation",
+        await http.post("http://dev.aroundorder.com/api/user/getTeamlocation",
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer $token',
-            },body:
-            );
+            },
+            body: json.encode({
+              {"partner_id": 14}
+            }));
     jsonresponse = json.decode(response.body);
     print(jsonresponse);
-    List<dynamic> jsonarray=jsonresponse["places"];
+    List<dynamic> jsonarray = jsonresponse["Location"];
     print(jsonarray);
-    List<Location> locationList=[];
-    for(Map d in jsonarray)
-    {
+    List<Location> locationList = [];
+    for (Map d in jsonarray) {
       print(LocationModel.fromJson(d).toString());
       locationList.add(LocationModel.fromJson(d));
     }

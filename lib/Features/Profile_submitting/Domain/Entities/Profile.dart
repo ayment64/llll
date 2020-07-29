@@ -18,8 +18,10 @@ class Profile {
   final String city;
   final String country;
   final String provision;
+  final int id;
 
   Profile({
+    @required this.id,
     @required this.firstname,
     @required this.lastname,
     @required this.email,

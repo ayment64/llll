@@ -29,3 +29,9 @@ class WentToSelectedPartnerProfile extends MyTeamState{
 
   WentToSelectedPartnerProfile({this.selected_partner});
 }
+class GettingPartnerLocations extends MyTeamState{}
+class GotPartnerLocations extends MyTeamState{
+  final List<Location> locations;
+
+  GotPartnerLocations({@required this.locations});
+}

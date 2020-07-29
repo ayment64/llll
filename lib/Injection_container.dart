@@ -18,6 +18,7 @@ import 'package:llll/Features/My_team/Data/Repositories/My_team_repositories_imp
 import 'package:llll/Features/My_team/Domain/Repositories/My_team_repository.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/FindUser.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
 import 'package:llll/Features/My_team/Presentation/bloc/my_team_bloc.dart';
 import 'package:llll/Features/Profile_submitting/Data/Repositories/Profile_repository_impl.dart';
 import 'package:llll/Features/Profile_submitting/Domain/UseCaces/Show_profile.dart';
@@ -143,7 +144,10 @@ void init() {
   //! ----------------------------------------------------------------------------------------------
   //* --------------------------------------- Category ----------------------------------------------------
   // ? Bloc
-  sl.registerFactory(() => MyTeamBloc(findUser: sl(), getTeam: sl()));
+  sl.registerFactory(() =>
+      MyTeamBloc(findUser: sl(), getTeam: sl(), getPartnerLocations: sl()));
+  // ? UseCases
+  sl.registerFactory(() => GetPartnerLocations(categoryRepositor: sl()));
   sl.registerLazySingleton(() => FindUser(categoryRepositor: sl()));
   sl.registerLazySingleton(() => GetTeam(categoryRepositor: sl()));
   // ? Repository

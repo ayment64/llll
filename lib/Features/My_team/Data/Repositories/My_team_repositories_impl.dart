@@ -4,12 +4,14 @@ import 'package:dartz/dartz.dart';
 import 'package:llll/Core/Platform/Network_info.dart';
 import 'package:llll/Features/My_team/Data/DataSource/My_team_remote_data_source.dart';
 import 'package:llll/Features/My_team/Domain/Repositories/My_team_repository.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/SendInvite.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetTeam.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetPartnerProfile.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/GetPartnerDocuments.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/FindUser.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 import 'package:meta/meta.dart';
 
 class MyTeamRepositoryImpl implements MyTeamRepository {
@@ -64,6 +66,20 @@ class MyTeamRepositoryImpl implements MyTeamRepository {
     try {
       networkInfo.isConnected;
       response = await remoteDataSource.sendInvite(params);
+      return Right(response);
+    } on NoSuchUserExeption {
+      return Left(NoSuchUserFailure());
+    } on ServerExeption {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Location>>> getPartnerLocations(
+      GetPartnerLocationParams params) async {
+    try {
+      networkInfo.isConnected;
+      response = await remoteDataSource.getPartnerLocations(params);
       return Right(response);
     } on NoSuchUserExeption {
       return Left(NoSuchUserFailure());

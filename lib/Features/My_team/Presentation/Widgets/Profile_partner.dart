@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Core/Routing/Routing.dart';
+import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
+import 'package:llll/Features/My_team/Presentation/Widgets/Location_list_partner.dart';
+import 'package:llll/Features/My_team/Presentation/bloc/my_team_bloc.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
+import 'package:llll/Features/maps/Domain/Entities/Location.dart';
 
 import 'Details_Widget.dart';
 
@@ -25,7 +30,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
   bool details = true;
   bool locations = false;
   bool documents = false;
-
+  List<Location> listOfLocations;
   @override
   Widget build(BuildContext context) {
     token = widget.token;
@@ -155,6 +160,8 @@ class _PartnerProfileState extends State<PartnerProfile> {
               ),
               MaterialButton(
                 onPressed: () {
+                  dispatchGetPartnerLocations(GetPartnerLocationParams(
+                      id: selectedProfile.id, token: token));
                   setState(() {
                     details = false;
                     locations = true;
@@ -176,7 +183,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
             ],
           ),
           Visibility(
-            visible: details,
+            visible: false,
             child: Details_Widget(
                 selectedProfile: selectedProfile,
                 adress: adress,
@@ -184,9 +191,18 @@ class _PartnerProfileState extends State<PartnerProfile> {
                 phone: phone,
                 mobile: mobile,
                 website: website),
+          ),
+          Visibility(
+            visible: locations,
+            child: LocationListPartner(token: token),
           )
         ],
       ),
     );
+  }
+
+  dispatchGetPartnerLocations(GetPartnerLocationParams params) {
+    BlocProvider.of<MyTeamBloc>(context)
+        .dispatch(GettPartnerLocations(params: params));
   }
 }

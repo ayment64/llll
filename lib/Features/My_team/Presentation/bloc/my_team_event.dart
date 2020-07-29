@@ -9,14 +9,21 @@ class FindUserEvent extends MyTeamEvent {
 
   FindUserEvent({@required this.params});
 }
+
 class GetTeamEvent extends MyTeamEvent {
   final GetTeamParams getTeamParams;
 
   GetTeamEvent({@required this.getTeamParams});
 }
-class GoToSelectedPartnerProfile extends MyTeamEvent{
+
+class GoToSelectedPartnerProfile extends MyTeamEvent {
   final Profile selected_partner;
 
   GoToSelectedPartnerProfile({this.selected_partner});
+}
 
+class GettPartnerLocations extends MyTeamEvent {
+  final GetPartnerLocationParams params;
+
+  GettPartnerLocations({@required this.params});
 }
