@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:llll/Core/Routing/Routing.dart';
 import 'package:llll/Features/My_team/Domain/UseCaces/Get_partner_locations.dart';
-import 'package:llll/Features/My_team/Presentation/Widgets/Location_list_partner.dart';
 import 'package:llll/Features/My_team/Presentation/bloc/my_team_bloc.dart';
 import 'package:llll/Features/Profile_submitting/Domain/Entities/Profile.dart';
 import 'package:llll/Features/maps/Domain/Entities/Location.dart';
@@ -183,7 +182,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
             ],
           ),
           Visibility(
-            visible: false,
+            visible: details,
             child: Details_Widget(
                 selectedProfile: selectedProfile,
                 adress: adress,
@@ -192,10 +191,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
                 mobile: mobile,
                 website: website),
           ),
-          Visibility(
-            visible: locations,
-            child: LocationListPartner(token: token),
-          )
+        
         ],
       ),
     );
